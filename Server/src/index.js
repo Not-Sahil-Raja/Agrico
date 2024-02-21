@@ -11,11 +11,11 @@ dotenv.config({
 });
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
-app.use("/", users);
-app.use("/", items);
-app.use("/", courses);
+// app.use("/", users);
+// app.use("/", items);
+// app.use("/", courses);
 
 app.get("/", (req, res) => {
   res.send("LOL");
