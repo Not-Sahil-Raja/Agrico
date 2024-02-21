@@ -29,7 +29,7 @@ const Login = () => {
   const loginCheck = (e) => {
     e.preventDefault();
 
-    axios.get(`http://localhost:3000/getuser/${email}`).then((res) => {
+    axios.get(`http://localhost:3001/getuser/${email}`).then((res) => {
       if (!res.data) {
         setPopstyle(
           "absolute bg-red-500 bottom-2 right-2 p-2 h-fit w-fit text-white font-bold rounded-xl transition-opacity"
@@ -86,7 +86,7 @@ const Login = () => {
     };
 
     axios
-      .post("http://localhost:3000/postallusers", userdata)
+      .post("http://localhost:3001/postallusers", userdata)
       .then(() => {
         console.log(userName, email, phoneNo, password);
         setUserName("");
@@ -119,7 +119,7 @@ const Login = () => {
 
   useEffect(() => {
     if (email != "" && login == false) {
-      axios.get(`http://localhost:3000/checkmail/${email}`).then((res) => {
+      axios.get(`http://localhost:3001/checkmail/${email}`).then((res) => {
         if (!res.data) {
           setPopstyle(
             "absolute bg-red-700 bottom-2 right-2 p-2 h-fit w-fit text-white font-bold rounded-xl opacity-0 transition-opacity"
