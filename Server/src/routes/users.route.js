@@ -14,7 +14,7 @@ router.get("/getallusers", async (req, res) => {
   }
 });
 
-router.get("/lol", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     res.send("LOL");
   } catch (error) {
