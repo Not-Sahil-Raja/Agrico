@@ -17,6 +17,10 @@ app.use("/", users);
 app.use("/", items);
 app.use("/", courses);
 
+app.get("/", (req, res) => {
+  res.send("LOL");
+});
+
 connectDB()
   .then(() => {
     app.listen(process.env.PORT || 8000, () => {
