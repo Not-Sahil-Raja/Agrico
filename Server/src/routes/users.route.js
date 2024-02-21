@@ -14,6 +14,15 @@ router.get("/getallusers", async (req, res) => {
   }
 });
 
+router.get("/lol", async (req, res) => {
+  try {
+    res.send("LOL");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
+
 router.post("/postallusers", async (req, res) => {
   try {
     if (
