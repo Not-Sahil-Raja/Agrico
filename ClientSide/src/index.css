@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo&family=Epilogue&family=Montserrat&family=Poppins&family=Syne&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* styles.css */
+.shadow-text {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
