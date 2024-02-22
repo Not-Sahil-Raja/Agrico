@@ -17,6 +17,7 @@ app.use("/", users);
 app.use("/", items);
 app.use("/", courses);
 
+console.log(`var : , ${process.env.NEWA}`);
 app.get("/", (req, res) => {
   res.send("LOL");
   console.log("listening on port 8000");
