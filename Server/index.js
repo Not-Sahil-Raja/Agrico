@@ -1,13 +1,13 @@
 import dotenv from "dotenv";
-import connectDB from "./db/db.js";
+import connectDB from "./src/db/db.js";
 import express from "express";
 import cors from "cors";
-import users from "./routes/users.route.js";
-import items from "./routes/items.route.js";
-import courses from "./routes/courses.route.js";
+import users from "./src/routes/users.route.js";
+import items from "./src/routes/items.route.js";
+import courses from "./src/routes/courses.route.js";
 
 dotenv.config({
-  path: "../env",
+  path: "./env",
 });
 
 const app = express();
