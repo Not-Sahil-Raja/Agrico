@@ -4,7 +4,8 @@ import { DB_NAME } from "../constant.js";
 const connectDB = async () => {
   try {
     const connInst = await mongoose.connect(
-      `${process.env.MONGODB_URI}/${DB_NAME}`
+      "mongodb+srv://sahilraja:Cf6iMhfY5YG4TozK@agricocluster.7ealjjl.mongodb.net/?retryWrites=true&w=majority&appName=AgricoCluster"
+      // `${process.env.MONGODB_URI}/${DB_NAME}`
     );
     console.log(
       `\nMongoDB Connected!! \nDB Host : ${connInst.connection.host}`
