@@ -1,3 +1,6 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 import dotenv from "dotenv";
 import connectDB from "./src/db/db.js";
 import express from "express";
