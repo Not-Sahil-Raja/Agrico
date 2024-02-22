@@ -5,9 +5,6 @@ const connectDB = async () => {
   try {
     console.log(process.env.MONGODB_URI, ":MONGODB_URI");
     const connInst = await mongoose.connect(
-      // process.env.MONGODB_URI
-      // "mongodb+srv://sahilraja:Cf6iMhfY5YG4TozK@agricocluster.7ealjjl.mongodb.net/?retryWrites=true&w=majority&appName=AgricoCluster"
-      // `${process.env.MONGODB_URI}`
       // `${process.env.MONGODB_URI}/${DB_NAME}`
       `${process.env.MONGODB_URI}`
     );
