@@ -22,16 +22,16 @@ app.get("/", (req, res) => {
   console.log("listening on port 8000");
 });
 
-// connectDB()
-//   .then(() => {
-//     app.listen(process.env.PORT || 8000, () => {
-//       console.log(`Server running on port : ${process.env.PORT}`);
-//     });
-//     app.on("error", (error) => {
-//       console.log("Error at : ", error);
-//       throw error;
-//     });
-//   })
-//   .catch((err) => {
-//     console.log("MongoDB Connection failed ! ", err);
-//   });
+connectDB()
+  .then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+      console.log(`Server running on port : ${process.env.PORT}`);
+    });
+    app.on("error", (error) => {
+      console.log("Error at : ", error);
+      throw error;
+    });
+  })
+  .catch((err) => {
+    console.log("MongoDB Connection failed ! ", err);
+  });
