@@ -8,7 +8,7 @@ const AllItems = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/itemsList")
+      .get(`${import.meta.env.VITE_SERVER}/itemsList`)
       .then((res) => {
         setItemList(res.data);
       })

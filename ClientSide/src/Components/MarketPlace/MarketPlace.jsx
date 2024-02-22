@@ -24,7 +24,7 @@ const MarketPlace = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/itemsList")
+      .get(`${import.meta.env.VITE_SERVER}/itemsList`)
       .then((res) => {
         setAddedItemList(res.data);
       })
@@ -42,7 +42,7 @@ const MarketPlace = () => {
       username: "username",
     };
     axios
-      .post("http://localhost:3000/Allitems", item)
+      .post(`${import.meta.env.VITE_SERVER}/Allitems`, item)
       .then((res) => {
         console.log(res.data);
         setAddedPop(true);

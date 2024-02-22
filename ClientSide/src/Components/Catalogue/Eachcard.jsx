@@ -11,7 +11,7 @@ const Eachcard = () => {
   // console.log(location.state.no);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/courses/${location.state.no}`)
+      .get(`${import.meta.env.VITE_SERVER}/courses/${location.state.no}`)
       .then((res) => {
         setInfo(res.data);
       });
