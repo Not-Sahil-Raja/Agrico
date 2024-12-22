@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.20.3",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@headlessui/react": "^1.7.18",
+    "@mui/material": "^6.2.1",
+    "@mui/x-charts": "^7.23.2",
     "@reduxjs/toolkit": "^2.1.0",
     "@tailwindcss/typography": "^0.5.15",
     "axios": "^1.6.7",

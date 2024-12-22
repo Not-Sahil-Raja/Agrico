@@ -16,6 +16,7 @@ import SellItem from "./Components/MarketPlace/SellItem.jsx";
 import CreateBlogPage from "./Components/CreateBlog/CreateBlogPage.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import EachArticle from "./Components/Articles/EachArticle/EachArticle.jsx";
+import SellerDashboard from "./Components/Seller/SellerDashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/article/:id",
         element: <EachArticle />,
+      },
+      {
+        path: "/sellerDashboard",
+        element: <SellerDashboard />,
       },
     ],
   },
