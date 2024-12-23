@@ -5,19 +5,30 @@ import ItemCard from "./ItemCard";
 import { motion } from "framer-motion";
 import ShowDet from "./ShowDet";
 import { Loader } from "lucide-react";
+import { useAuth } from "@clerk/clerk-react";
 
 const AllItems = () => {
+  const { getToken } = useAuth();
   const [itemList, setItemList] = useState([]);
-  useEffect(() => {
+
+  const fetchProducts = async () => {
+    const token = await getToken();
     axios
-      .get(`${import.meta.env.VITE_SERVER}/itemsList`)
+      .get(`${import.meta.env.VITE_SERVER}/product/all-products`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setItemList(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
+
+  fetchProducts();
+
   return (
     <>
       <div className=" h-fit flex flex-col relative  ">

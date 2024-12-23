@@ -6,10 +6,13 @@ import { CheckSquare, X, HandCoins } from "lucide-react";
 import { emptyCart, addSellDet } from "../../Apps/cartSlice";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
+import { useAuth } from "@clerk/clerk-react";
 
 import axios from "axios";
 
 const Cart = () => {
+  const { getToken } = useAuth();
+
   const [selectedOptions, setSelectedOptions] = useState("Gpay");
   const [total, setTotal] = useState(0);
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -39,31 +42,40 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {}, [cartItems]);
-  console.log("CartItems", cartItems);
 
   const [payDetails, setPayDetails] = useState({});
 
-  const paymentSubmitHandler = (e) => {
+  const paymentSubmitHandler = async (e) => {
     e.preventDefault();
-    const paymentDetails = {
-      name,
-      phoneNo,
-      email,
-      address,
-      landmark,
-      paymentMethod: selectedOptions,
-      total: total + discount + deliveryCharges,
-    };
-    setPayDetails(paymentDetails);
-    dispatch(addSellDet(paymentDetails));
-    setPayDonePop(true);
+    const token = await getToken();
+
+    axios
+      .post(
+        `${import.meta.env.VITE_SERVER}/orders/place-orders`,
+        {
+          products: cartItems,
+          userName: name,
+          userEmail: email,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setPayDonePop(true);
+      })
+      .catch((err) => console.log(err));
   };
 
-  const PayNow = () => {
-    console.log("Checkout", cartItems);
-    axios.post("http://localhost:3000/api/checkout", cartItems).catch((err) => {
-      console.log("Axios Issue! : ", err);
-    });
+  const PlaceOrder = () => {
+    axios
+      .post(`${import.meta.env.VITE_SERVER}/orders/place-orders`, cartItems)
+      .catch((err) => {
+        console.log("Axios Issue! : ", err);
+      });
     console.log("PayNow");
     setPayDonePop(true);
     dispatch(emptyCart());
@@ -165,7 +177,6 @@ const Cart = () => {
                 className=" bg-[#256d31] text-white w-full h-full rounded-md"
                 whileHover={{ backgroundColor: "#319241" }}
                 whileTap={{ scale: 0.9 }}
-                onClick={PayNow}
               >
                 Confirm & Pay Now
               </motion.button>

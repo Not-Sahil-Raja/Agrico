@@ -12,14 +12,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       unigue: true,
     },
-    phno: {
-      type: Number,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
   },
   {
     timestamps: true,

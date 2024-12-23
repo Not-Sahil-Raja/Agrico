@@ -4,6 +4,7 @@ import upload from "../middlewares/multer.middleware.js";
 import { v2 as cloudinary } from "cloudinary";
 import { sellerDetail } from "../models/sellerdetails.model.js";
 import { Product } from "../models/products.model.js";
+import { Inventory } from "../models/inventorydetails.model.js";
 
 const router = express.Router();
 
@@ -34,16 +35,6 @@ router.post("/add", upload.single("productImg"), async (req, res) => {
   const seller = await sellerDetail.findOne({ email: email });
   if (!seller) return res.status(404).json({ message: "Seller not found" });
 
-  const existingProduct = await Product.findOne({
-    sellerId: seller._id,
-    name: itemName,
-  });
-  if (existingProduct) {
-    existingProduct.quantity =
-      parseInt(existingProduct.quantity) + parseInt(quantity);
-    await existingProduct.save();
-    return res.status(200).json({ message: "Product quantity updated" });
-  }
   let imageUrl = null;
 
   if (req.file) {
@@ -84,7 +75,55 @@ router.post("/add", upload.single("productImg"), async (req, res) => {
   });
 
   await newProduct.save();
-  res.status(201).json({ message: "Product Added !!" });
+  const inventoryUpdated = await updateInventoryMetrics(
+    seller._id,
+    quantity,
+    price
+  );
+
+  if (!inventoryUpdated.success) {
+    return res.status(400).json({
+      message: "Inventory Update Failed !!",
+      error: inventoryUpdated.error,
+    });
+  }
+
+  res.status(201).json({ message: "Product Added !! | Inventory Updated !" });
+});
+
+router.get("/all-products", async (req, res) => {
+  try {
+    const products = await Product.find({});
+    res.status(200).json(products);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch products", error: error.message });
+  }
 });
 
 export default router;
+
+const updateInventoryMetrics = async (sellerId, quantity, price) => {
+  try {
+    let inventory = await Inventory.findOne({ sellerId });
+    if (!inventory)
+      inventory = new Inventory({
+        sellerId: sellerId,
+        totalItems: 0,
+        lowStockItems: 0,
+        outOfStockItems: false,
+        inventoryValue: 0,
+      });
+
+    inventory.totalItems += parseInt(quantity);
+    inventory.inventoryValue += parseInt(quantity) * parseInt(price);
+    if (inventory.totalItems < 10) inventory.lowStockItems++;
+
+    await inventory.save();
+    return { success: true };
+  } catch (error) {
+    console.log(error, " Inventory Update Failed !!");
+    return { success: false, error: error.message };
+  }
+};

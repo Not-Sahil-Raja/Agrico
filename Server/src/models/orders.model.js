@@ -1,15 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
 const orderSchema = new mongoose.Schema({
-  sellerId: {
-    type: Schema.Types.ObjectId,
-    ref: "SellerDetails",
-    required: true,
-  },
   userId: { type: Schema.Types.ObjectId, ref: "userdetails", required: true },
   products: [
     {
-      productId: {
+      _id: {
         type: Schema.Types.ObjectId,
         ref: "Products",
         required: true,
