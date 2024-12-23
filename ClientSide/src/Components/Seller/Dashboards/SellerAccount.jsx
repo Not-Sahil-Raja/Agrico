@@ -1,17 +1,166 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User, Mail, Lock, Bell, Smartphone, Shield } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useAuth } from "@clerk/clerk-react";
+import axios from "axios";
+import { sellerUpdate } from "../../../Apps/sellerDetailsslice";
 
 export default function SellerAccount() {
+  const { getToken } = useAuth();
+  const dispatch = useDispatch();
+
   const [avatarUrl, setAvatarUrl] = useState(
     "/placeholder.svg?height=100&width=100"
   );
 
+  const [sellerInfo, setSellerInfo] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    bio: "",
+    profilePic: "/placeholder.svg?height=100&width=100",
+  });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [bio, setBio] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [profilePic, setProfilePic] = useState(null);
+
+  const [isPasswordUpdating, setIsPasswordUpdating] = useState(false);
+  const [isSavingChanges, setIsSavingChanges] = useState(false);
+
+  const [isPasswordMatched, setIsPasswordMatched] = useState(true);
+
+  const SellerDetail = useSelector((state) => state.sellerDetail);
+  useEffect(() => {
+    if (SellerDetail.sellerDetails) {
+      setSellerInfo(SellerDetail.sellerDetails);
+      setAvatarUrl(
+        SellerDetail.sellerDetails.profilePic ||
+          "/placeholder.svg?height=100&width=100"
+      );
+
+      setFirstName(SellerDetail.sellerDetails.firstName || "");
+      setLastName(SellerDetail.sellerDetails.lastName || "");
+      setDisplayName(
+        `${
+          SellerDetail.sellerDetails.displayName
+            ? SellerDetail.sellerDetails.displayName
+            : SellerDetail.sellerDetails.firstName +
+              " " +
+              SellerDetail.sellerDetails.lastName
+        }`
+      );
+      setBio(SellerDetail.sellerDetails.bio || "");
+    }
+  }, [SellerDetail]);
+
+  useEffect(() => {
+    if (newPassword !== confirmNewPassword) setIsPasswordMatched(false);
+    else setIsPasswordMatched(true);
+  }, [confirmNewPassword, newPassword]);
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProfilePic(file);
+      setAvatarUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const updatePassword = async () => {
+    const token = await getToken();
+    const formData = new FormData();
+
+    setIsPasswordUpdating(true);
+    formData.append("email", sellerInfo.email);
+    formData.append("currentPassword", currentPassword);
+    formData.append("newPasssword", newPassword);
+
+    axios
+      .put(`${import.meta.env.VITE_SERVER}/seller/update-password`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmNewPassword("");
+        console.log(res.data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setIsPasswordUpdating(false));
+  };
+
+  const saveAllChanges = async () => {
+    setIsSavingChanges(true);
+    const token = await getToken();
+    const formData = new FormData();
+
+    const updatedData = {
+      firstName,
+      lastName,
+      displayName,
+      bio,
+    };
+
+    formData.append("updatedData", JSON.stringify(updatedData));
+    if (profilePic) {
+      formData.append("profilePic", profilePic);
+    }
+    formData.append("email", sellerInfo.email);
+    formData.append("currentPassword", currentPassword);
+
+    axios
+      .put(`${import.meta.env.VITE_SERVER}/seller/update-profile`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setIsSavingChanges(false);
+        console.log(res.data);
+        const [fName, lName] = res.data.name.split(" ");
+        dispatch(
+          sellerUpdate({
+            firstName: fName,
+            lastName: lName,
+            email: res.data.email,
+            profilePic: res.data.profilePic,
+            bio: res.data.bio,
+            displayName: res.data.displayName,
+          })
+        );
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmNewPassword("");
+      })
+      .catch((err) => {
+        setIsSavingChanges(false);
+        console.error(err);
+      });
+  };
+
   return (
-    <div className="space-y-8 bg-stone-100 min-h-[90svh] px-3 py-2 font-Archivo mr-2">
+    <div className="space-y-8 bg-stone-100 min-h-[90svh] px-3 py-3 font-Archivo mr-2">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-primary">Account Settings</h1>
-        <button className="border border-gray-300 rounded px-4 py-2">
-          Save All Changes
+        <button
+          className="border border-[#a1bb7c] bg-[#daf5b5] hover:bg-[#d2f0a9] rounded px-4 py-2 transition-all disabled:opacity-80 active:scale-95"
+          disabled={isSavingChanges}
+          onClick={saveAllChanges}
+        >
+          {isSavingChanges ? (
+            <span className=" animate-pulse transition-all">Saving ..</span>
+          ) : (
+            "Save All Changes"
+          )}
         </button>
       </div>
 
@@ -29,14 +178,16 @@ export default function SellerAccount() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <button
-              className="border border-gray-300 rounded px-4 py-2"
-              onClick={() =>
-                setAvatarUrl("/placeholder.svg?height=100&width=100")
-              }
-            >
-              Change Avatar
-            </button>
+            <label className="mt-2 border border-gray-300 rounded px-4 py-2 cursor-pointer">
+              Upload Profile Picture
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </label>
+
             <div className="w-full space-y-2">
               <label
                 htmlFor="displayName"
@@ -48,6 +199,8 @@ export default function SellerAccount() {
                 id="displayName"
                 placeholder="John Doe"
                 className="block w-full border border-gray-300 rounded px-3 py-2"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
               />
             </div>
             <div className="w-full space-y-2">
@@ -61,6 +214,8 @@ export default function SellerAccount() {
                 id="bio"
                 placeholder="Tell us about yourself"
                 className="block w-full border border-gray-300 rounded px-3 py-2"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
               />
             </div>
           </div>
@@ -94,6 +249,8 @@ export default function SellerAccount() {
                           id="firstName"
                           placeholder="Enter First Name"
                           className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -110,6 +267,8 @@ export default function SellerAccount() {
                           id="lastName"
                           placeholder="Enter Last Name"
                           className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -119,7 +278,7 @@ export default function SellerAccount() {
                       htmlFor="email"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Email
+                      Email (You can't change)
                     </label>
                     <div className="relative">
                       <Mail className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
@@ -127,7 +286,9 @@ export default function SellerAccount() {
                         id="email"
                         type="email"
                         placeholder="john.doe@example.com"
-                        className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                        className="block w-full border border-gray-300 disabled:bg-stone-100 rounded pl-8 px-3 py-2 "
+                        value={sellerInfo.email}
+                        disabled
                       />
                     </div>
                   </div>
@@ -152,6 +313,8 @@ export default function SellerAccount() {
                       id="currentPassword"
                       type="password"
                       className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
                     />
                   </div>
                 </div>
@@ -169,6 +332,8 @@ export default function SellerAccount() {
                       id="newPassword"
                       type="password"
                       className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </div>
                 </div>
@@ -186,12 +351,25 @@ export default function SellerAccount() {
                       id="confirmPassword"
                       type="password"
                       className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                      value={confirmNewPassword}
+                      onChange={(e) => setConfirmNewPassword(e.target.value)}
                     />
                   </div>
+                  <p
+                    className={`${
+                      isPasswordMatched && "hidden"
+                    } font-semibold text-rose-600`}
+                  >
+                    ** password doesn't matched
+                  </p>
                 </div>
-                <div className=" ">
-                  <button className="border border-zinc-400 hover:bg-zinc-200 active:scale-95 bg-zinc-100 rounded px-2 py-2 w-fit  transition-all">
-                    Change Password
+                <div className="">
+                  <button
+                    className="border  hover:bg-black/80 active:scale-95 bg-black text-white rounded shadow px-5 py-2 w-fit  transition-all"
+                    disabled={isPasswordUpdating}
+                    onClick={updatePassword}
+                  >
+                    {isPasswordUpdating ? "Wait Updating !" : "Change Password"}
                   </button>
                 </div>
               </div>

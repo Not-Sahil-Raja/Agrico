@@ -8,6 +8,8 @@ import courses from "./src/routes/courses.route.js";
 import dashboard from "./src/routes/dashboard.route.js";
 import checkoutit from "./src/routes/checkout.route.js";
 import LessonPost from "./src/routes/lessonPost.route.js";
+import Seller from "./src/routes/seller.route.js";
+import Product from "./src/routes/product.route.js";
 
 import {
   ClerkExpressRequireAuth,
@@ -36,6 +38,8 @@ app.use("/api/", courses);
 app.use("/api/", dashboard);
 app.use("/api/", checkoutit);
 app.use("/api/lesson/", LessonPost);
+app.use("/api/seller/", Seller);
+app.use("/api/product/", Product);
 
 app.get("/", ClerkExpressWithAuth(), (req, res) => {
   res.send("Welcome to the Agrico API!");

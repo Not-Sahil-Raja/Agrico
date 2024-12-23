@@ -5,15 +5,27 @@ import Sales from "./Dashboards/Sales";
 import Orders from "./Dashboards/Orders";
 import Inventory from "./Dashboards/Inventory";
 import SellerAccount from "./Dashboards/SellerAccount";
-import AddItem from "./Dashboards/AddItem";
+import AddProduct from "./Dashboards/AddProduct";
+import SellerDetails from "./Details/SellerDetails";
+
+import { useSelector } from "react-redux";
 
 const SellerDashboard = () => {
   const [activePage, setActivePage] = React.useState("overview");
+  const [isSellerLoggedIn, setIsSellerLoggedIn] = React.useState(false);
+
+  const sellerDetail = useSelector((state) => state.sellerDetail);
+
+  React.useEffect(() => {
+    if (sellerDetail && sellerDetail.sellerDetails.sellerLoggedIn) {
+      setIsSellerLoggedIn(true);
+    } else setIsSellerLoggedIn(false);
+  }, [sellerDetail]);
 
   const renderPage = () => {
     switch (activePage) {
-      case "additem":
-        return <AddItem />;
+      case "addProduct":
+        return <AddProduct />;
       case "overview":
         return <SellerOverview />;
       case "sales":
@@ -31,8 +43,14 @@ const SellerDashboard = () => {
 
   return (
     <div className="pt-16 h-[100svh] flex">
-      <Sidebar setActivePage={setActivePage} activePage={activePage} />
-      <div className="content flex-1 pr-2">{renderPage()}</div>
+      {isSellerLoggedIn ? (
+        <>
+          <Sidebar setActivePage={setActivePage} activePage={activePage} />
+          <div className="content flex-1 pr-2">{renderPage()}</div>
+        </>
+      ) : (
+        <SellerDetails />
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ShoppingCart,
   Package,
@@ -7,18 +7,30 @@ import {
   ArrowLeft,
   UserCog2,
   PackagePlus,
+  LogOutIcon,
+  LucideCircleEllipsis,
 } from "lucide-react";
 import { motion, useAnimationControls } from "framer-motion";
+import { useSelector, useDispatch } from "react-redux";
+import { sellerLogout } from "../../Apps/sellerDetailsslice";
 
 const Sidebar = ({ setActivePage, activePage }) => {
-  const [menuToggle, setMenuToggle] = React.useState(false);
+  const dispatch = useDispatch();
+  const [menuToggle, setMenuToggle] = useState(false);
+  const [sellerInfo, setSellerInfo] = useState({
+    sellerLoggedIn: false,
+    firstName: "",
+    lastName: "",
+    email: "",
+    profilePic: "",
+  });
+  // { name: "Account", icon: UserCog2, page: "account" },
   const menuItems = [
-    { name: "Add Item", icon: PackagePlus, page: "additem" },
+    { name: "Add Item", icon: PackagePlus, page: "addProduct" },
     { name: "Overview", icon: Layers, page: "overview" },
     { name: "Sales", icon: BarChart2, page: "sales" },
     { name: "Orders", icon: ShoppingCart, page: "orders" },
     { name: "Inventory", icon: Package, page: "inventory" },
-    { name: "Account", icon: UserCog2, page: "account" },
   ];
 
   const ContainersVariant = {
@@ -32,6 +44,12 @@ const Sidebar = ({ setActivePage, activePage }) => {
     },
   };
   const AnimationControl = useAnimationControls();
+
+  const sellerDetail = useSelector((state) => state.sellerDetail);
+
+  useEffect(() => {
+    setSellerInfo(sellerDetail.sellerDetails);
+  }, [sellerDetail]);
 
   useEffect(() => {
     menuToggle
@@ -81,7 +99,6 @@ const Sidebar = ({ setActivePage, activePage }) => {
               ? "bg-[#e6f0e0] text-green-700 hover:bg-[#eef5e9]"
               : " text-black"
           }
-              ${index === 5 && "mt-auto"}
             `}
           onClick={() => setActivePage(item.page)}
         >
@@ -91,6 +108,49 @@ const Sidebar = ({ setActivePage, activePage }) => {
           </span>
         </div>
       ))}
+
+      <div
+        className={`flex items-center gap-3 p-2 rounded cursor-pointer hover:bg-zinc-100 mt-auto border border-zinc-300
+          ${
+            activePage === "account"
+              ? "bg-[#e6f0e0] text-green-700 hover:bg-[#e4f5da]"
+              : " text-black"
+          }`}
+        onClick={() => setActivePage("account")}
+      >
+        {sellerInfo && sellerInfo.profilePic ? (
+          <img
+            src={sellerInfo.profilePic}
+            className="w-9 min-w-9 aspect-square rounded-md object-cover"
+          />
+        ) : (
+          <UserCog2 className="w-9 min-w-9 aspect-square" />
+        )}
+        <div className=" min-w-0 flex flex-col">
+          <span className=" overflow-clip tracking-wide leading-tight whitespace-nowrap min-w-0 font-semibold">
+            {sellerInfo.firstName + sellerInfo.lastName}
+          </span>
+
+          <span className=" overflow-clip tracking-wide leading-tight whitespace-nowrap min-w-0 text-xs text-current/75">
+            {sellerInfo.email}
+          </span>
+        </div>
+        <LucideCircleEllipsis
+          className={`  ml-auto w-9 min-w-9 aspect-square ${
+            activePage === "account" ? "text-green-600" : "text-black/65"
+          }`}
+        />
+      </div>
+
+      <div
+        className=" w-full py-2 text-stone-50 border border-stone-900 bg-stone-700 hover:bg-stone-600 flex items-center gap-3 p-2 rounded cursor-pointer"
+        onClick={() => dispatch(sellerLogout())}
+      >
+        <LogOutIcon className=" w-9 min-w-9 aspect-square" />
+        <span className=" overflow-clip tracking-wide whitespace-nowrap min-w-0">
+          Logout
+        </span>
+      </div>
     </motion.div>
   );
 };

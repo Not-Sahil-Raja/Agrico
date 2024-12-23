@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import {
   Loader2,
@@ -10,18 +8,66 @@ import {
   Tag,
   FilePlus2,
 } from "lucide-react";
+import { useAuth } from "@clerk/clerk-react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-export default function AddItem() {
+export default function AddProduct() {
+  const seller = useSelector((state) => state.sellerDetail);
+  const { getToken } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [itemImage, setItemImage] = useState(null);
 
+  const [itemName, setItemName] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [itemInStock, setItemInStock] = useState(false);
+  const [productImg, setProductImg] = useState(null);
+
   const handleSubmit = async (e) => {
+    if (!seller.sellerDetails.email) return "Insufficient details!!";
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const token = await getToken();
+    const formData = new FormData();
+    formData.append("email", seller.sellerDetails.email);
+    formData.append("itemName", itemName);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("price", price);
+    formData.append("quantity", quantity);
+    formData.append("itemInStock", itemInStock);
+    if (productImg) formData.append("productImg", productImg);
+
+    axios
+      .post(`${import.meta.env.VITE_SERVER}/product/add`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setItemName("");
+        setDescription("");
+        setCategory("");
+        setPrice("");
+        setQuantity("");
+        setItemInStock(false);
+        setItemImage(null);
+        setProductImg(null);
+      })
+      .catch((err) => console.error(err));
+
     setIsSubmitting(false);
-    // Reset form (in a real app, you'd reset all fields here)
+  };
+
+  const handleFileChanges = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProductImg(file);
+      setItemImage(URL.createObjectURL(file));
+    }
   };
 
   return (
@@ -55,6 +101,8 @@ export default function AddItem() {
                   id="itemName"
                   placeholder="Enter item name"
                   className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                  value={itemName}
+                  onChange={(e) => setItemName(e.target.value)}
                   required
                 />
               </div>
@@ -70,6 +118,8 @@ export default function AddItem() {
                 id="itemDescription"
                 placeholder="Describe your item"
                 className="block w-full border border-gray-300 rounded px-3 py-2"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 required
               />
             </div>
@@ -84,8 +134,10 @@ export default function AddItem() {
                 id="itemCategory"
                 className="block w-full border border-gray-300 rounded px-3 py-2"
                 required
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Select a category
                 </option>
                 <option value="fruits">Fruits</option>
@@ -122,6 +174,8 @@ export default function AddItem() {
                     step="0.01"
                     placeholder="0.00"
                     className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
                     required
                   />
                 </div>
@@ -141,6 +195,8 @@ export default function AddItem() {
                     min="0"
                     placeholder="0"
                     className="block w-full border border-gray-300 rounded pl-8 px-3 py-2"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
                     required
                   />
                 </div>
@@ -150,6 +206,8 @@ export default function AddItem() {
                   type="checkbox"
                   id="itemInStock"
                   className="toggle-checkbox p-2 h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
+                  checked={itemInStock}
+                  onChange={(e) => setItemInStock(e.target.checked)}
                 />
                 <label
                   htmlFor="itemInStock"
@@ -175,7 +233,7 @@ export default function AddItem() {
                     <img
                       src={itemImage}
                       alt="Item preview"
-                      className="w-20 h-20 object-cover rounded"
+                      className="w-36 h-36 object-cover rounded"
                     />
                   ) : (
                     <div className="w-36 h-36 bg-gray-200 rounded flex items-center justify-center">
@@ -193,16 +251,7 @@ export default function AddItem() {
                       type="file"
                       accept="image/*"
                       className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            setItemImage(reader.result);
-                          };
-                          reader.readAsDataURL(file);
-                        }
-                      }}
+                      onChange={handleFileChanges}
                     />
                   </label>
                 </div>
