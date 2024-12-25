@@ -17,7 +17,23 @@ export const cartSlice = createSlice({
       );
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
+    updateQuantity: (state, action) => {
+      const { _id, opr } = action.payload;
 
+      state.cartItems = state.cartItems
+        .map((item) =>
+          item._id === _id
+            ? {
+                ...item,
+                quantity:
+                  opr === "+" ? parseInt(item.quantity) + 1 : item.quantity - 1,
+              }
+            : item
+        )
+        .filter((item) => item.quantity > 0);
+
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },
     emptyCart: (state) => {
       state.cartItems = [];
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
@@ -38,7 +54,13 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, updateCart, emptyCart, addSellDet } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  updateCart,
+  emptyCart,
+  addSellDet,
+  updateQuantity,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

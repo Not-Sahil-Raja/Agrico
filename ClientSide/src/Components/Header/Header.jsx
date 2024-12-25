@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userlogout } from "../../Apps/userInfoslice.js";
-import { ShoppingCart, PlusIcon } from "lucide-react";
+import { ShoppingCart, PlusIcon, ShoppingBagIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import AgricoLogo from "./AgricoLogo.jsx";
 import UserManagement from "./UserManagement.jsx";
@@ -50,19 +50,15 @@ const Header = () => {
         )}
 
         {isSignedIn && (
-          <motion.div
-            className=" py-[.35vh] font-WorkSans bg-black rounded border border-black/50"
-            whileHover={{ backgroundColor: "rgb(0 0 0 / 0.85)" }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
+          <NavLink
+            className="flex gap-2 justify-center relative items-center p-2 bg-stone-200 border border-stone-300 rounded"
+            to="/cart"
           >
-            <NavLink
-              className="w-full flex gap-2 justify-center items-center text-white px-3 rounded"
-              to="/cart"
-            >
-              <ShoppingCart size={17} />
-              <div className=" opacity-90  "> Cart</div>
-            </NavLink>
-          </motion.div>
+            <ShoppingBagIcon size={17} />
+            <div className=" absolute  bg-red-500 top-[-22%] right-[-22%] text-white text-xs h-5 w-5 flex items-center justify-center rounded-full aspect-square">
+              2
+            </div>
+          </NavLink>
         )}
       </div>
     </div>

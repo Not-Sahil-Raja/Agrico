@@ -93,7 +93,9 @@ router.post("/add", upload.single("productImg"), async (req, res) => {
 
 router.get("/all-products", async (req, res) => {
   try {
-    const products = await Product.find({});
+    const products = await Product.find({
+      itemInStock: true,
+    });
     res.status(200).json(products);
   } catch (error) {
     res

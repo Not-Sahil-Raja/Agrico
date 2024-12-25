@@ -7,9 +7,24 @@ import { Inventory } from "../models/inventorydetails.model.js";
 const router = express.Router();
 
 router.post("/place-orders", async (req, res) => {
-  const { products, userEmail, userName } = req.body;
-
-  if (!products || !userEmail || !userName)
+  const { products, userEmail, userName, paymentDetail, shippingDetail } =
+    req.body;
+  console.log(req.body);
+  if (
+    !products ||
+    !userEmail ||
+    !userName ||
+    !paymentDetail ||
+    !paymentDetail.PaymentMethod ||
+    !shippingDetail ||
+    !shippingDetail.CustomerName ||
+    !shippingDetail.Country ||
+    !shippingDetail.Address ||
+    !shippingDetail.City ||
+    !shippingDetail.State ||
+    !shippingDetail.PostalCode ||
+    !shippingDetail.PhoneNumber
+  )
     return res.status(401).json({ message: "Required fileds are not filled" });
 
   try {
@@ -51,6 +66,8 @@ router.post("/place-orders", async (req, res) => {
     const newOrder = new Orders({
       userId: user._id,
       products,
+      paymentDetail,
+      shippingDetail,
       total,
       status: "processing",
     });
