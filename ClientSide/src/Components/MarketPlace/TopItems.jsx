@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TopPickCard from "./TopPickCard";
+import TopPickCard from "./MarketPlaceCard/TopPickCard";
 import { motion } from "framer-motion";
 
 const TopItems = () => {
@@ -42,59 +42,20 @@ const TopItems = () => {
   ]);
   return (
     <>
-      <div className=" w-full h-[50vh]  flex flex-col justify-around overflow-hidden">
-        <motion.div
-          className=" text-xl font-Manrope font-semibold h-[25%] flex flex-col px-[2%] justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: 0.2,
-            stiffness: 150,
-            damping: 20,
-            type: "spring",
-            bounce: 0.25,
-          }}
-        >
-          <span className="h-2/3 text-3xl flex items-end">Top Food Items</span>
-          <div className=" h-1/3 flex items-center ">
-            <span className=" opacity-80 text-base">
-              Best Quality Products at Best Prices
-            </span>
-            <span className=" text-base opacity-90 ml-auto px-[2%] flex items-center gap-2">
-              Chekout the products
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="black"
-                stroke="black"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-triangle rotate-90"
-              >
-                <path d="M13.73 4a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-              </svg>
-            </span>
-          </div>
-        </motion.div>
-        <motion.div
-          className="  h-[75%]  relative  py-[1%] px-[2%] flex gap-5"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: 0.2,
-            stiffness: 1500,
-            damping: 20,
-            type: "tween",
-            delay: 0.3,
-          }}
-          staggerChildren={0.1}
-        >
+      <div className=" w-full h-fit font-Archivo mt-5 pt-5 flex flex-col justify-around overflow-hidden bg-stone-100">
+        <div className="flex flex-col justify-center px-8 ">
+          <h3 className="text-3xl flex items-end leading-none pl-1 font-semibold">
+            Best Selling Products
+          </h3>
+          <h6 className=" opacity-80 font-normal text-base text-black/85 pl-1">
+            Best quality, unbeatable prices. Direct from farmers to you.
+          </h6>
+        </div>
+        <div className="h-fit py-[1%] px-[2%] grid grid-cols-5 gap-2">
           {topItemsList.map((item, index) => (
             <TopPickCard
               key={index}
+              index={index}
               width={20}
               fsize="sm"
               imglinks={item.imglinks}
@@ -103,7 +64,7 @@ const TopItems = () => {
               suppName={item.suppName}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
     </>
   );

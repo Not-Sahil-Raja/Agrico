@@ -12,7 +12,6 @@ import ContactUs from "./Components/ContactUs/ContactUs.jsx";
 import { store } from "./Apps/store.js";
 import { Provider } from "react-redux";
 import Cart from "./Components/Cart/Cart.jsx";
-import SellItem from "./Components/MarketPlace/SellItem.jsx";
 import CreateBlogPage from "./Components/CreateBlog/CreateBlogPage.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import EachArticle from "./Components/Articles/EachArticle/EachArticle.jsx";
@@ -47,10 +46,6 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
 
-      {
-        path: "/sellitem",
-        element: <SellItem />,
-      },
       {
         path: "/createblog",
         element: <CreateBlogPage />,

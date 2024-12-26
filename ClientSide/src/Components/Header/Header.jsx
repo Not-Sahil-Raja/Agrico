@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { userlogout } from "../../Apps/userInfoslice.js";
-import { ShoppingCart, PlusIcon, ShoppingBagIcon } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { PlusIcon, ShoppingBagIcon } from "lucide-react";
 import AgricoLogo from "./AgricoLogo.jsx";
 import UserManagement from "./UserManagement.jsx";
 import { useUser } from "@clerk/clerk-react";
 
 const Header = () => {
   const { isSignedIn } = useUser();
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   return (
     <div className="  bg-[#ffffffd3] backdrop-blur-md px-[3vw] lg:py-2 2xl:py-1 fixed top-0 z-50 w-screen text-lg font-Archivo text-[#2b1c1c] flex  items-center gap-[5vw] drop-shadow-md ">
@@ -56,7 +54,7 @@ const Header = () => {
           >
             <ShoppingBagIcon size={17} />
             <div className=" absolute  bg-red-500 top-[-22%] right-[-22%] text-white text-xs h-5 w-5 flex items-center justify-center rounded-full aspect-square">
-              2
+              {cartItems ? cartItems.length : "0"}
             </div>
           </NavLink>
         )}

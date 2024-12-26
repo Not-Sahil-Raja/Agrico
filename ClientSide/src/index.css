@@ -22,11 +22,11 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7.5px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #2f3d34;
-  border-radius: 10px;
+  background-color: #819682;
+  border-radius: 2px;
 }
 
 /* For Quill Editor */

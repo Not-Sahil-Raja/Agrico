@@ -1,105 +1,98 @@
-import { QuoteIcon } from "lucide-react";
+import { ArrowRight, QuoteIcon } from "lucide-react";
 import React from "react";
 
 const Footer = () => {
   return (
-    <>
-      <div className=" w-full h-full bg-green-400 relative flex justify-center items-center px-[5%] py-[5%]">
-        <img
-          src="https://images.unsplash.com/photo-1486754735734-325b5831c3ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-          className=" w-full h-full object-cover absolute z-0 brightness-90 "
-        />
-        <div className=" h-full w-full bg-gradient-to-b from-[#00000034] to-[#000000]  absolute select-none"></div>
-        <div className=" h-[90%] w-[97%]  absolute z-20 flex flex-col">
-          <div className=" h-[85%] w-full flex items-center ">
-            <div className=" h-full flex-1">
-              <div className="  h-[50%] pr-[25vw] text-white">
-                <div className=" h-[55%] break-words font-WorkSans overflow-hidden text-[2.7vh]">
-                  Our educational platform empowers farmers to learn valuable
-                  skills, improve their operations, and achieve greater success.
-                </div>
-                <div className=" h-[45%] b flex">
-                  <div className=" text-[10vh] bg-[#645e5e] p-[1vh] m-[1vh] rounded-full aspect-square flex items-center justify-center">
-                    <QuoteIcon size={30} className=" -rotate-180" />
-                  </div>
-                  <div className=" flex items-center ml-[2vh] font-WorkSans text-[2.7vh] h-full">
-                    <span className="bg-black px-[3vh] py-[1.5vh] rounded-3xl ">
-                      Get Started Today
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className=" h-full flex-[.65]  flex flex-col justify-center items-center text-white">
-              <div className=" h-[20%] w-full font-WorkSans flex items-center justify-start font-medium text-[3vh]">
-                (+91)86478 52252
-              </div>
-              <div className=" h-[20%] w-full font-WorkSans font-normal flex items-center justify-start  text-[3vh]">
-                Kolkata, West Bengal, India
-              </div>
-              <div className=" h-[60%] w-full  flex items-center gap-[5%] justify-start">
-                <div className="  flex-1 h-full flex flex-col items-start  font-[300]">
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Home
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Cateagory
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    MarketPlace
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Features
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Contact
-                  </span>
-                </div>
-                <div className="  flex-1 h-full flex flex-col items-start justify-center font-[300]">
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Guide
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Faqs
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Terms
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Privacy Policy
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]"></span>
-                </div>
-                <div className="  flex-1 h-full flex flex-col items-start justify-center font-[300]">
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Facebook
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Instagram
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]">
-                    Twitter
-                  </span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]"></span>
-                  <span className=" text-[2.5vh] font-WorkSans  h-[20%]"></span>
-                </div>
-              </div>
-            </div>
+    <div className="w-full h-full bg-stone-100/70 relative flex flex-col font-Archivo px-10 py-8 pt-20">
+      <div className=" w-full flex mb-2">
+        <h2 className=" text-9xl text-gray-800">Agrico</h2>
+        <form className=" ml-auto mt-auto mr-5 w-1/4 flex flex-col items-start">
+          <label htmlFor="email" className="text-lg text-gray-800 mb-2">
+            Sign up for our newsletter
+          </label>
+          <div className=" flex w-full gap-2">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your email here"
+              className="p-2 rounded-sm mb-2 grow focus:outline-none appearance-none"
+            />
+            <button
+              type="submit"
+              className=" bg-stone-200 hover:bg-stone-300/65 text-stone-700 border border-stone-300 py-2 px-4 rounded-md hover:border-stone-400/70 w-fit flex gap-2 h-fit duration-100 transition-all"
+            >
+              Subscribe <ArrowRight />
+            </button>
           </div>
-          <div className=" flex items-center h-[15%] w-full justify-start">
-            <span className=" text-[#f8f5f5] font-medium font-WorkSans text-base">
-              © 2021 AgroTech. All rights reserved.
-            </span>
+        </form>
+      </div>
+      <div className=" flex gap-5 mt-2 mb-3">
+        <p className="text-lg text-gray-900/85  pb-3 line-clamp-3 break-words leading-none max-w-[30rem]">
+          Bridging the gap between local farmers and conscious consumers.
+          Bringing you the freshest produce while supporting sustainable
+          agriculture.
+        </p>
+        <div className=" flex-1 px-4 flex justify-end gap-32 mr-14 ml-32 my-7">
+          <div>
+            <h4 className="font-semibold mb-4 ">Quick Links</h4>
+            <ul className="space-y-2 ">
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                About Us
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                Our Farmers
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                How It Works
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                CSA Program
+              </li>
+            </ul>
+          </div>
+          <div className="">
+            <h4 className="font-semibold mb-4 ">Customer Support</h4>
+            <ul className="space-y-2 ">
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                Contact Us
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                FAQ
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                Shipping & Returns
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                Privacy Policy
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-4 ">Social</h4>
+            <ul className="space-y-2">
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                Facebook
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                Twitter
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                Instagram
+              </li>
+              <li className="hover:text-black/65 transition-colors cursor-pointer">
+                LinkedIn
+              </li>
+            </ul>
           </div>
         </div>
-        {/* <div className=" h-[10vh] w-full bg-[#285a1e7a] flex justify-center absolute items-center z-20">
-          <span className=" text-white font-WorkSans text-2xl">
-            © 2021 AgroTech. All rights reserved.
-          </span>
-        </div> */}
       </div>
-    </>
+
+      <span className="font-medium font-Archivo text-center w-full text-base text-black/65 border-t pt-2">
+        © 2021 AgroTech. All rights reserved.
+      </span>
+    </div>
   );
 };
 
