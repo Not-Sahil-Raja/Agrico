@@ -26,6 +26,9 @@ const Header = () => {
         <CustomNavLink to="/marketPlace" isActiveClass="underline ">
           MarketPlace
         </CustomNavLink>
+        <CustomNavLink to="/sellerDashboard" isActiveClass="underline ">
+          Seller Dashboard
+        </CustomNavLink>
       </div>
 
       <div className=" flex gap-[1vw] items-center justify-evenly  px-[.5vw] ">

@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import ItemCard from "../MarketPlaceCard/ItemCard";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
+import ShowCurrentState from "../ShowCurrentState";
 
 const MarketPlaceRecomendation = () => {
   const { getToken } = useAuth();
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState(0);
+  const [currentFetchingState, setCurrentFetchState] = useState("");
   const carousel = useRef(null);
   const controls = useAnimation();
 
@@ -23,24 +25,26 @@ const MarketPlaceRecomendation = () => {
     }
   }, [recommendedProducts]);
 
+  // * Fetch the recommended Products
+  // ! recommendation currently selects random
+
   const fetchRecomendedProducts = async () => {
     const token = await getToken();
+    setCurrentFetchState("loading");
     axios
-      .get(`${import.meta.env.VITE_SERVER}/product/all-products`, {
+      .get(`${import.meta.env.VITE_SERVER}/product/recommendations`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        setRecommendedProducts((prevProducts) => {
-          const duplicatedProducts = [];
-          for (let i = 0; i < 10; i++) {
-            duplicatedProducts.push(...res.data);
-          }
-          return duplicatedProducts;
-        });
+        setRecommendedProducts(res.data);
+        if (res.data.length <= 0) setCurrentFetchState("empty");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setCurrentFetchState("error");
+        console.log(err);
+      });
   };
 
   const nextSlide = () => {
@@ -68,6 +72,7 @@ const MarketPlaceRecomendation = () => {
             Here are some products we think you'll love.
           </span>
         </div>
+        {/* Used to slide the product */}
         <div className="gap-2 flex mr-24">
           <button
             className="bg-stone-200 hover:bg-stone-300/70 disabled:opacity-60 active:scale-95 transition-all duration-300 aspect-square flex items-center justify-center h-fit p-1 rounded"
@@ -85,22 +90,29 @@ const MarketPlaceRecomendation = () => {
           </button>
         </div>
       </div>
+      {/* Renders all the recommended products */}
       <div className="w-[99svw] overflow-hidden">
-        <motion.div
-          ref={carousel}
-          className="flex gap-2 px-8 mb-4"
-          animate={controls}
-          drag="x"
-          dragConstraints={{ right: 0, left: -width }}
-          whileTap={{ cursor: "grabbing" }}
-          transition={{ type: "spring", stiffness: 180, damping: 30 }}
-        >
-          {recommendedProducts.map((item, index) => (
-            <motion.div key={index} className="min-w-[380px] p-2">
-              <ItemCard item={item} />
+        <AnimatePresence>
+          {recommendedProducts.length > 0 ? (
+            <motion.div
+              ref={carousel}
+              className="flex gap-2 px-8 mb-4"
+              animate={controls}
+              drag="x"
+              dragConstraints={{ right: 0, left: -width }}
+              whileTap={{ cursor: "grabbing" }}
+              transition={{ type: "spring", stiffness: 180, damping: 30 }}
+            >
+              {recommendedProducts.map((item, index) => (
+                <motion.div key={index} className="min-w-[380px] p-2">
+                  <ItemCard item={item} />
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
+          ) : (
+            <ShowCurrentState currentState={currentFetchingState} />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -32,11 +32,8 @@ const Homepage = () => {
   }, []);
   return (
     <>
-      <div className=" scrollbar-hide w-[100vw]  h-[100vh]  bg-white overflow-x-hidden">
-        <div
-          className=" h-[470vh] w-[100vw] overflow-x-hidden bg-white  "
-          ref={p1}
-        >
+      <div className=" w-[100vw]  h-[100vh]  bg-white overflow-x-hidden">
+        <div className=" h-fit w-[100vw] overflow-x-hidden bg-white  " ref={p1}>
           <motion.div
             className=" h-[100vh] overflow-x-hidden  scrollbar-hide relative"
             initial={{ opacity: 0 }}
@@ -118,7 +115,7 @@ const Homepage = () => {
                 className="relative inline-flex items-center justify-center p-4 px-[4vw] py-[2vh] font-WorkSans overflow-hidden font-medium bg-[#000000b2] text-white transition duration-300 ease-out border-2 border-black shadow-md group text-3xl whitespace-nowrap rounded-lg"
                 id="btun"
                 onClick={() => {
-                  navigate("/catlg");
+                  navigate("/article");
                 }}
                 initial={{ y: "35%", scale: 0 }}
                 animate={{ y: "0%", scale: 1 }}
@@ -175,7 +172,7 @@ const Homepage = () => {
             {/* <ContactUs /> */}
           </motion.div>
           <motion.div
-            className="h-[100vh] w-[100vw] bg-white relative overflow-hidden scrollbar-hide"
+            className="h-screen w-screen bg-white relative overflow-hidden scrollbar-hide"
             ref={p3}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -192,21 +189,8 @@ const Homepage = () => {
               <Reviews />
             </div>
           </motion.div>
-          <motion.div
-            className="h-[70vh] w-[100vw] bg-[#ad6666] relative overflow-hidden scrollbar-hide"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.25,
-              type: "spring",
-              ease: "easeInOut",
-              stiffness: 70,
-              delay: 0.3,
-            }}
-          >
-            <Footer />
-          </motion.div>
+
+          <Footer />
         </div>
       </div>
     </>

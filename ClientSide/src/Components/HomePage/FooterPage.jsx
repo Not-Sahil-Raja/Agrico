@@ -28,7 +28,7 @@ const Footer = () => {
         </form>
       </div>
       <div className=" flex gap-5 mt-2 mb-3">
-        <p className="text-lg text-gray-900/85  pb-3 line-clamp-3 break-words leading-none max-w-[30rem]">
+        <p className="text-lg text-gray-900/85  pb-3 line-clamp-3 break-words leading-tight max-w-[30rem]">
           Bridging the gap between local farmers and conscious consumers.
           Bringing you the freshest produce while supporting sustainable
           agriculture.

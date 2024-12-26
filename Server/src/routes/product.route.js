@@ -5,6 +5,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { sellerDetail } from "../models/sellerdetails.model.js";
 import { Product } from "../models/products.model.js";
 import { Inventory } from "../models/inventorydetails.model.js";
+import { Orders } from "../models/orders.model.js";
 
 const router = express.Router();
 
@@ -101,6 +102,102 @@ router.get("/all-products", async (req, res) => {
     res
       .status(500)
       .json({ message: "Failed to fetch products", error: error.message });
+  }
+});
+
+router.get("/pagination", async (req, res) => {
+  try {
+    const pageSize = parseInt(req.query.pageSize);
+    const pageIndex = parseInt(req.query.pageIndex);
+    const category = req.query.category;
+    const searchQuery = req.query.search || "";
+
+    const pipeline = [];
+
+    if (searchQuery) {
+      pipeline.push({
+        $search: {
+          index: "name",
+          text: {
+            query: searchQuery,
+            path: ["name", "description", "category"],
+          },
+        },
+      });
+    }
+
+    pipeline.push(
+      {
+        $match: {
+          itemInStock: true,
+          ...(category ? { category: category } : {}),
+        },
+      },
+      {
+        $skip: (pageIndex - 1) * pageSize,
+      },
+      {
+        $limit: pageSize,
+      }
+    );
+
+    const productList = await Product.aggregate(pipeline);
+
+    return res
+      .status(200)
+      .json({ message: "Product Sent Successfully !", productList });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: "Failed to send data !!" });
+  }
+});
+
+router.get("/best-selling-products", async (req, res) => {
+  try {
+    const bestSellingProducts = await Orders.aggregate([
+      { $unwind: "$products" },
+      {
+        $group: {
+          _id: "$products._id",
+          totalQuantity: { $sum: "$products.quantity" },
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "productDetails",
+        },
+      },
+      { $unwind: "$productDetails" },
+      { $sort: { totalQuantity: -1 } },
+      { $limit: 5 },
+    ]);
+
+    res.status(200).json(bestSellingProducts);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Failed to fetch products !" });
+  }
+});
+
+router.get("/recommendations", async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+    const recommendations = await Product.aggregate([
+      { $match: { itemInStock: true } },
+      { $sample: { size: limit } },
+    ]);
+
+    res.status(200).json(recommendations);
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Failed to fetch temporary recommendations",
+        error: error.message,
+      });
   }
 });
 
