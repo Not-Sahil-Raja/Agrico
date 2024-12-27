@@ -31,6 +31,9 @@ const Header = () => {
             <CustomNavLink to="/sellerDashboard" isActiveClass="underline ">
               Seller Dashboard
             </CustomNavLink>
+            <CustomNavLink to="/contact" isActiveClass="underline ">
+              Contact Us
+            </CustomNavLink>
           </>
         )}
       </div>

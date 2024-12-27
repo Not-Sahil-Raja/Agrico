@@ -11,7 +11,7 @@ import LessonPost from "./src/routes/lessonPost.route.js";
 import Seller from "./src/routes/seller.route.js";
 import Product from "./src/routes/product.route.js";
 import Order from "./src/routes/order.route.js";
-
+import Feedback from "./src/routes/feedback.route.js";
 import {
   ClerkExpressRequireAuth,
   ClerkExpressWithAuth,
@@ -42,6 +42,7 @@ app.use("/api/lesson/", LessonPost);
 app.use("/api/seller/", Seller);
 app.use("/api/product/", Product);
 app.use("/api/orders/", Order);
+app.use("/api/feedback/", Feedback);
 
 app.get("/", ClerkExpressWithAuth(), (req, res) => {
   res.send("Welcome to the Agrico API!");
