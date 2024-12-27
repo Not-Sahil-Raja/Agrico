@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/place-orders", async (req, res) => {
   const { products, userEmail, userName, paymentDetail, shippingDetail } =
     req.body;
-  console.log(req.body);
+
   if (
     !products ||
     !userEmail ||

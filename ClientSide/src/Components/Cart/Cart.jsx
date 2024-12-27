@@ -12,9 +12,7 @@ import PaymentProcessing from "./PaymentProcessing";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+
   // Cart's Charges
   const [cartDetails, setCartDetails] = useState({
     productQuantiy: 0,

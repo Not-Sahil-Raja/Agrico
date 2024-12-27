@@ -70,7 +70,6 @@ const Login = () => {
         );
       }
     });
-    console.log(email, password);
 
     setEmail("");
     setPassword("");
@@ -88,7 +87,6 @@ const Login = () => {
     axios
       .post(`${import.meta.env.VITE_SERVER}/postallusers`, userdata)
       .then(() => {
-        console.log(userName, email, phoneNo, password);
         setUserName("");
         setEmail("");
         setPhoneNo("");

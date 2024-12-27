@@ -19,7 +19,7 @@ const PopularArticle = () => {
         })
         .then((res) => {
           setPopularArticle(res.data);
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
           console.log(err);

@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/getallusers", async (req, res) => {
   try {
     const users = await User.find({});
-    console.log("DB.find Called");
+
     res.json(users);
   } catch (error) {
     console.error(error);
@@ -30,7 +30,7 @@ router.post("/postallusers", async (req, res) => {
     };
 
     const userAdded = await User.create(newUser);
-    console.log("newuser", userAdded);
+
     return res.status(201).send(userAdded);
   } catch (error) {
     console.log("Unable to push to DB", error.message);

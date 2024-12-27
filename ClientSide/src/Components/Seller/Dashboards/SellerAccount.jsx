@@ -95,7 +95,6 @@ export default function SellerAccount() {
         setCurrentPassword("");
         setNewPassword("");
         setConfirmNewPassword("");
-        console.log(res.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setIsPasswordUpdating(false));
@@ -130,7 +129,7 @@ export default function SellerAccount() {
       })
       .then((res) => {
         setIsSavingChanges(false);
-        console.log(res.data);
+
         const [fName, lName] = res.data.name.split(" ");
         dispatch(
           sellerUpdate({

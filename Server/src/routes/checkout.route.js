@@ -17,7 +17,7 @@ router.post("/checkout", async (req, res) => {
           console.error("Error:", error);
         });
     });
-    console.log("Item Deleted");
+
     res.status(201).send("Item added to sold items");
   } catch (error) {
     console.error(error);

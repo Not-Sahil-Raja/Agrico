@@ -20,7 +20,7 @@ const EachArticle = () => {
       })
       .then((res) => {
         setArticleData(res.data);
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
