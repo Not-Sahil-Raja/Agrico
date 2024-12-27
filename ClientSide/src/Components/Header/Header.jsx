@@ -20,15 +20,19 @@ const Header = () => {
         <CustomNavLink to="/" isActiveClass="underline ">
           Home
         </CustomNavLink>
-        <CustomNavLink to="/article" isActiveClass="underline ">
-          Article
-        </CustomNavLink>
-        <CustomNavLink to="/marketPlace" isActiveClass="underline ">
-          MarketPlace
-        </CustomNavLink>
-        <CustomNavLink to="/sellerDashboard" isActiveClass="underline ">
-          Seller Dashboard
-        </CustomNavLink>
+        {isSignedIn && (
+          <>
+            <CustomNavLink to="/article" isActiveClass="underline ">
+              Article
+            </CustomNavLink>
+            <CustomNavLink to="/marketPlace" isActiveClass="underline ">
+              MarketPlace
+            </CustomNavLink>
+            <CustomNavLink to="/sellerDashboard" isActiveClass="underline ">
+              Seller Dashboard
+            </CustomNavLink>
+          </>
+        )}
       </div>
 
       <div className=" flex gap-[1vw] items-center justify-evenly  px-[.5vw] ">
