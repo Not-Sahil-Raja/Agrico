@@ -35,6 +35,8 @@ export default function SellerAccount() {
   const [isPasswordMatched, setIsPasswordMatched] = useState(true);
 
   const SellerDetail = useSelector((state) => state.sellerDetail);
+
+  // * Setting all the seller details
   useEffect(() => {
     if (SellerDetail.sellerDetails) {
       setSellerInfo(SellerDetail.sellerDetails);
@@ -58,6 +60,7 @@ export default function SellerAccount() {
     }
   }, [SellerDetail]);
 
+  // Checking if the passwords are matching
   useEffect(() => {
     if (newPassword !== confirmNewPassword) setIsPasswordMatched(false);
     else setIsPasswordMatched(true);
@@ -71,6 +74,7 @@ export default function SellerAccount() {
     }
   };
 
+  //Update Password in DB
   const updatePassword = async () => {
     const token = await getToken();
     const formData = new FormData();
@@ -97,6 +101,7 @@ export default function SellerAccount() {
       .finally(() => setIsPasswordUpdating(false));
   };
 
+  //Saving all the changes in DB
   const saveAllChanges = async () => {
     setIsSavingChanges(true);
     const token = await getToken();
@@ -164,6 +169,7 @@ export default function SellerAccount() {
         </button>
       </div>
 
+      {/* Account Profile pic , name & bio */}
       <div className="grid gap-8 md:grid-cols-3">
         <div className="p-4 bg-white rounded-lg shadow md:col-span-1">
           <div className="mb-4">
@@ -229,6 +235,7 @@ export default function SellerAccount() {
             </p>
           </div>
           <div className="w-full">
+            {/* Account Information Detail */}
             <div className="space-y-4">
               <div className="flex flex-col">
                 <div className=" border border-neutral-300 rounded">
@@ -295,6 +302,7 @@ export default function SellerAccount() {
                 </div>
               </div>
             </div>
+            {/* Accounts Security Settings */}
             <div className=" border border-neutral-300 rounded mt-4 ">
               <div className=" border-b px-3 py-1 border-neutral-300 text-lg text-black/80">
                 Security Settings

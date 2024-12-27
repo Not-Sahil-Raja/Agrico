@@ -27,7 +27,7 @@ const SellerDashboard = () => {
       case "addProduct":
         return <AddProduct />;
       case "overview":
-        return <SellerOverview />;
+        return <SellerOverview setActivePage={setActivePage} />;
       case "sales":
         return <Sales />;
       case "orders":

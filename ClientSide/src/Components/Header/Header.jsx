@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PlusIcon, ShoppingBagIcon } from "lucide-react";
 import AgricoLogo from "./AgricoLogo.jsx";
@@ -52,13 +52,19 @@ const Header = () => {
 
         {isSignedIn && (
           <NavLink
-            className="flex gap-2 justify-center relative items-center p-2 bg-stone-200 border border-stone-300 rounded"
+            className={({ isActive }) =>
+              `flex gap-2 justify-center relative items-center p-2 bg-stone-200 border border-stone-300 rounded transition-all duration-300 ${
+                isActive && "bg-stone-600 text-white"
+              } `
+            }
             to="/cart"
           >
             <ShoppingBagIcon size={17} />
-            <div className=" absolute  bg-red-500 top-[-22%] right-[-22%] text-white text-xs h-5 w-5 flex items-center justify-center rounded-full aspect-square">
-              {cartItems ? cartItems.length : "0"}
-            </div>
+            {cartItems.length > 0 && (
+              <div className=" absolute  bg-red-500 top-[-22%] right-[-22%] text-white text-xs h-5 w-5 flex items-center justify-center rounded-full aspect-square">
+                {cartItems && cartItems.length}
+              </div>
+            )}
           </NavLink>
         )}
       </div>

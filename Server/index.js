@@ -36,8 +36,8 @@ app.use((err, req, res, next) => {
 app.use("/api/", users);
 app.use("/api/", items);
 app.use("/api/", courses);
-app.use("/api/", dashboard);
 app.use("/api/", checkoutit);
+app.use("/api/seller-dashboard", dashboard);
 app.use("/api/lesson/", LessonPost);
 app.use("/api/seller/", Seller);
 app.use("/api/product/", Product);

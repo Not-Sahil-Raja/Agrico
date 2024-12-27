@@ -6,7 +6,12 @@ import { useDispatch } from "react-redux";
 import { emptyCart } from "../../Apps/cartSlice";
 import axios from "axios";
 
-const PaymentProcessing = ({ shippingDetail, paymentDetail, cartItems }) => {
+const PaymentProcessing = ({
+  shippingDetail,
+  paymentDetail,
+  cartItems,
+  setCheckOutStage,
+}) => {
   const { getToken } = useAuth();
   const { user } = useUser();
   const dispatch = useDispatch();
@@ -37,8 +42,14 @@ const PaymentProcessing = ({ shippingDetail, paymentDetail, cartItems }) => {
         setIsProcessing(false);
         setIsOrderSuccessful(true);
         dispatch(emptyCart());
+        setTimeout(() => {
+          setCheckOutStage("shipping");
+        }, 10000); // 3 seconds delay
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsOrderSuccessful(false);
+      });
   };
 
   useEffect(() => {
@@ -71,10 +82,10 @@ const PaymentProcessing = ({ shippingDetail, paymentDetail, cartItems }) => {
           <p className=" animate-pulse">Processing...</p>
         </div>
       )}
-      {isOrderSuccessful && (
+      {isOrderSuccessful && !isProcessing && (
         <div className=" flex flex-col items-center gap-2">
           <motion.div
-            className=" w-32 h-32 flex mb-4 bg-white rounded-full items-center justify-center shadow-md"
+            className=" w-32 h-32 flex mb-4 bg-white rounded-full items-center justify-center shadow-md animate-pulse"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -83,6 +94,13 @@ const PaymentProcessing = ({ shippingDetail, paymentDetail, cartItems }) => {
           </motion.div>
           <p className=" text-center text-black/75 leading-tight">
             Payment Successful <br /> Your order is on the way
+          </p>
+        </div>
+      )}
+      {!isOrderSuccessful && !isProcessing && (
+        <div className=" flex flex-col items-center gap-2">
+          <p className=" text-center text-red-600 leading-tight">
+            Payment Failed <br /> Please try again
           </p>
         </div>
       )}

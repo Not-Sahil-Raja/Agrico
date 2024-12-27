@@ -49,8 +49,6 @@ const Cart = () => {
   // Used to set check out the stage to conditionally render component
   const [checkOutStage, setCheckOutStage] = useState("shipping");
 
-  const dispatch = useDispatch();
-
   //Updating Cart Details for other checkout pages whenever cartItems gets updated
   useEffect(() => {
     let totalCharge = parseFloat(0);
@@ -192,6 +190,7 @@ const Cart = () => {
                   shippingDetail={shippingDetail}
                   paymentDetail={paymentDetail}
                   cartItems={cartItems}
+                  setCheckOutStage={setCheckOutStage}
                 />
               )}
             </AnimatePresence>

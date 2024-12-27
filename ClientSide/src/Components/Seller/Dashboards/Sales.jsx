@@ -1,52 +1,78 @@
 import React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { useAuth } from "@clerk/clerk-react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Sales = () => {
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-  const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-  const xLabels = [
-    "Page A",
-    "Page B",
-    "Page C",
-    "Page D",
-    "Page E",
-    "Page F",
-    "Page G",
-  ];
+  const { getToken } = useAuth();
+  const sellerDet = useSelector((state) => state.sellerDetail);
 
-  const TopSellingProduct = [
-    {
-      name: "Strawberry",
-      sales: "200Kg",
-      img: "./strawberry.jpg",
-    },
-    {
-      name: "Rice",
-      sales: "500kg",
-      img: "./rice-image.jpg",
-    },
-  ];
+  //Storing all sales details
+  const [salesDetail, setSalesDetail] = React.useState({
+    averageOrderValue: 0,
+    returningCustomers: 0,
+    topSoldItems: [],
+    totalRevenue: 0,
+    weeklySalesSummary: [],
+  });
+
+  // * Fetching all the sales information about the seller
+  const fetchSalesDetail = async () => {
+    const token = await getToken();
+    axios
+      .get(`${import.meta.env.VITE_SERVER}/seller-dashboard/sales`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          sellerEmail: sellerDet.sellerDetails.email,
+        },
+      })
+      .then((res) => {
+        setSalesDetail({
+          averageOrderValue: res.data.averageOrderValue,
+          returningCustomers: res.data.returningCustomers,
+          totalRevenue: res.data.totalRevenue,
+          topSoldItems: res.data.topSoldItems,
+          weeklySalesSummary: res.data.weeklySalesSummary,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    fetchSalesDetail();
+  }, []);
+
+  //* Making the chartdata for the weekly summary
+  const chartData = salesDetail.weeklySalesSummary.map((day, index) => ({
+    day: `Day ${index + 1}`,
+    totalSales: day.totalSales,
+    totalOrders: day.totalOrders,
+  }));
 
   return (
     <div className=" flex flex-col w-full h-[90svh] px-3 py-2 font-Archivo  justify-stretch bg-stone-100  rounded-md space-x-4 ">
       <h1 className="text-2xl font-bold mb-4">Sales Dashboard</h1>
       <div className=" flex gap-3 grow">
         <div className=" flex-[4] flex flex-col gap-3">
+          {/* Rendering the average order , total Revenue , returningCustomers */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                title: "Total Sales",
-                value: "$124,567.89",
+                title: "Total Revenue",
+                value: salesDetail.totalRevenue,
                 percentage: "+12%",
               },
               {
                 title: "Returning Customers",
-                value: "28%",
+                value: salesDetail.returningCustomers,
                 percentage: "+5%",
               },
               {
                 title: "Average Order Value",
-                value: "$101.23",
+                value: salesDetail.averageOrderValue.toFixed(2),
                 percentage: "+3%",
               },
             ].map((arr, index) => (
@@ -69,39 +95,45 @@ const Sales = () => {
               </div>
             ))}
           </div>
-          <div className=" border flex flex-col bg-white  p-4 rounded-lg grow">
-            <p className=" text-xl font-semibold mb-2">Sales Summary</p>
+          {/* Rendering the LineChart */}
+          <div className=" border flex flex-col bg-white items-center  p-4 rounded-lg grow">
+            <p className=" text-xl font-semibold mb-2">Weekly Sales Summary</p>
+
             <LineChart
+              dataset={chartData}
+              xAxis={[{ scaleType: "band", dataKey: "day" }]}
               series={[
-                { data: pData, label: "pv", yAxisId: "leftAxisId" },
-                { data: uData, label: "uv", yAxisId: "rightAxisId" },
+                { dataKey: "totalSales", label: "Total Sales" },
+                { dataKey: "totalOrders", label: "Total Orders" },
               ]}
-              xAxis={[{ scaleType: "point", data: xLabels }]}
-              yAxis={[{ id: "leftAxisId" }, { id: "rightAxisId" }]}
-              rightAxis="rightAxisId"
+              width={650}
+              height={300}
             />
           </div>
         </div>
-        <div className=" border flex flex-col bg-white gap-2 p-4 rounded-lg grow">
+        <div className=" border flex flex-col bg-white gap-3 p-4 rounded-lg grow">
           <h1 className=" text-xl font-semibold mb-2">Top Selling Products</h1>
           <div className=" flex w-full justify-between border-b mb-3 px-4 font-semibold text-neutral-500">
             <p>Products</p>
-            <p>Earning</p>
+            <p>Total Quantity</p>
           </div>
-          {TopSellingProduct.map((prd, index) => (
-            <div
-              className=" flex border justify-between items-center px-2 py-1"
-              key={index}
-            >
-              <img
-                src={prd.img}
-                alt={prd.img}
-                className=" w-16 h-16 rounded "
-              />
-              <div className="  max-w-32 line-clamp-2 ">{prd.name}</div>
-              <div className=" mr-2">{prd.sales}</div>
+          {salesDetail.topSoldItems.length > 0 ? (
+            salesDetail.topSoldItems.map((prd, index) => (
+              <div
+                className=" flex bg-stone-100 border justify-between items-center px-4 py-4"
+                key={index}
+              >
+                <div className=" max-w-32 line-clamp-2 font-semibold text-black/80">
+                  {prd.name}
+                </div>
+                <div className=" mr-2">{prd.totalQuantity}</div>
+              </div>
+            ))
+          ) : (
+            <div className=" min-w-full h-48 bg-white rounded-md flex items-center justify-center">
+              <p>Not Enough Data To Show !</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>
