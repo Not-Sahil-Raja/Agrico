@@ -103,7 +103,7 @@ const AllItems = () => {
                 name="filter"
                 value={filter.value}
                 checked={selectedFilter === filter.value}
-                onChange={() => setSelectedFilter(filter)}
+                onChange={() => setSelectedFilter(filter.value)}
                 className="hidden"
               />
               {filter.label}
