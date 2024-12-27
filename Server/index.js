@@ -2,16 +2,14 @@ import dotenv from "dotenv";
 import connectDB from "./src/db/db.js";
 import express from "express";
 import cors from "cors";
-import users from "./src/routes/users.route.js";
-import items from "./src/routes/items.route.js";
-import courses from "./src/routes/courses.route.js";
+
 import dashboard from "./src/routes/dashboard.route.js";
-import checkoutit from "./src/routes/checkout.route.js";
 import LessonPost from "./src/routes/lessonPost.route.js";
 import Seller from "./src/routes/seller.route.js";
 import Product from "./src/routes/product.route.js";
 import Order from "./src/routes/order.route.js";
 import Feedback from "./src/routes/feedback.route.js";
+
 import {
   ClerkExpressRequireAuth,
   ClerkExpressWithAuth,
@@ -26,6 +24,7 @@ const app = express();
 app.use(cors({}));
 app.use(express.json());
 
+// * Using Clerk for Authorization
 app.use(ClerkExpressRequireAuth());
 
 app.use((err, req, res, next) => {
@@ -33,10 +32,8 @@ app.use((err, req, res, next) => {
   res.status(401).send("Unauthorized access!");
 });
 
-app.use("/api/", users);
-app.use("/api/", items);
-app.use("/api/", courses);
-app.use("/api/", checkoutit);
+// * Add all the api routes
+
 app.use("/api/seller-dashboard", dashboard);
 app.use("/api/lesson/", LessonPost);
 app.use("/api/seller/", Seller);
@@ -48,6 +45,8 @@ app.get("/", ClerkExpressWithAuth(), (req, res) => {
   res.send("Welcome to the Agrico API!");
   console.log("Root URL accessed !");
 });
+
+// *  Connecting DB and  Server running on port message
 
 connectDB()
   .then(() => {

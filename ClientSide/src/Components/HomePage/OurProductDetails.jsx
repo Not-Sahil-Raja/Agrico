@@ -1,6 +1,6 @@
 import { MoveRight, Wheat } from "lucide-react";
 import React from "react";
-import vid from "../../../public/farming-02.gif";
+import vid from "/farming-02.gif";
 import { motion } from "framer-motion";
 
 const OurProductDetails = () => {

@@ -51,7 +51,6 @@ const Inventory = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setInventoryDetails({
           totalItems: Math.abs(res.data.InventoryDetails.totalItems),
           lowStockItems: res.data.InventoryDetails.lowStockItems,

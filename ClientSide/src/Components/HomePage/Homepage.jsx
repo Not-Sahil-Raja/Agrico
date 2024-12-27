@@ -32,10 +32,10 @@ const Homepage = () => {
   }, []);
   return (
     <>
-      <div className=" w-[100vw]  h-[100vh]  bg-white overflow-x-hidden">
+      <div className=" w-screen h-screen  bg-white overflow-x-hidden">
         <div className=" h-fit w-[100vw] overflow-x-hidden bg-white  " ref={p1}>
           <motion.div
-            className=" h-[100vh] overflow-x-hidden  scrollbar-hide relative"
+            className="h-screen overflow-x-hidden  scrollbar-hide relative"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
@@ -51,6 +51,7 @@ const Homepage = () => {
               playsInline
               ref={videoEl}
               autoPlay
+              loading="lazy"
               loop
               muted
               className="absolute z-0 h-full w-full object-cover"
@@ -66,7 +67,7 @@ const Homepage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, type: "tween", delay: 0.5 }}
                 >
-                  <p className=" whitespace-nowrap flex gap-1  items-center ">
+                  <div className=" whitespace-nowrap flex gap-1  items-center ">
                     <span className="">Cultivating </span>
                     <motion.div
                       className=" bg-white h-[8vh] w-[8vh] rounded-full overflow-hidden  relative"
@@ -88,7 +89,7 @@ const Homepage = () => {
                       />
                     </motion.div>{" "}
                     <span>Sustainable Future</span>
-                  </p>
+                  </div>
                   <span className=" whitespace-nowrap">
                     Through Modern Agriculture
                   </span>
@@ -146,7 +147,7 @@ const Homepage = () => {
             </div>
           </motion.div>
           <div
-            className="h-[100vh] w-[100vw] bg-white relative overflow-hidden scrollbar-hide"
+            className="h-screen w-screen bg-white relative overflow-hidden scrollbar-hide"
             ref={p2}
           >
             <div>
@@ -169,7 +170,6 @@ const Homepage = () => {
             ref={p3}
           >
             <OurProductDetails />
-            {/* <ContactUs /> */}
           </motion.div>
           <motion.div
             className="h-screen w-screen bg-white relative overflow-hidden scrollbar-hide"

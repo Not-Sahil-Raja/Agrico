@@ -7,7 +7,6 @@ import Article from "./Components/Articles/Article.jsx";
 import Homepage from "./Components/HomePage/Homepage.jsx";
 import AboutUs from "./Components/AboutUs/AboutUs.jsx";
 import MarketPlace from "./Components/MarketPlace/MarketPlace.jsx";
-import Login from "./Components/Login/Login.jsx";
 import ContactUs from "./Components/ContactUs/ContactUs.jsx";
 import { store } from "./Apps/store.js";
 import { Provider } from "react-redux";
@@ -23,11 +22,6 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "", element: <Homepage /> },
-
-      {
-        path: "/login",
-        element: <Login />,
-      },
       {
         path: "/contact",
         element: <ContactUs />,
