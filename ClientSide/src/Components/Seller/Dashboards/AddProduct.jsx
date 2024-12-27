@@ -7,17 +7,20 @@ import {
   Package,
   Tag,
   FilePlus2,
+  Check,
 } from "lucide-react";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function AddProduct() {
   const seller = useSelector((state) => state.sellerDetail);
   const { getToken } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [itemImage, setItemImage] = useState(null);
-
   const [itemName, setItemName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -28,6 +31,10 @@ export default function AddProduct() {
 
   const handleSubmit = async (e) => {
     if (!seller.sellerDetails.email) return "Insufficient details!!";
+    if (!itemName || !description || !category || !price || !quantity) {
+      console.log("Please fill in all required fields.");
+      return;
+    }
     e.preventDefault();
     setIsSubmitting(true);
     const token = await getToken();
@@ -56,10 +63,13 @@ export default function AddProduct() {
         setItemInStock(false);
         setItemImage(null);
         setProductImg(null);
+        setShowToast(true);
+        setIsSubmitting(false);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 4000);
       })
       .catch((err) => console.error(err));
-
-    setIsSubmitting(false);
   };
 
   const handleFileChanges = (e) => {
@@ -71,7 +81,30 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="p-8 space-y-8 font-Archivo bg-stone-100">
+    <div className="p-8 space-y-8 font-Archivo bg-stone-100 relative">
+      {/* Used to show a toast when new product is added  */}
+      <AnimatePresence>
+        {showToast && (
+          <motion.div
+            className=" absolute bottom-[5vh] left-10 flex items-center bg-[#c1f8c1] border border-[#96db96] px-2 py-4 rounded-md z-10"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Check className=" h-full mr-3 bg-green-700 text-green-100 rounded p-1" />
+            <div className=" flex-col">
+              {" "}
+              <p className="text-green-600 font-semibold leading-none">
+                Your product has been successfully added!
+              </p>
+              <p className="text-stone-900 leading-none mt-1">
+                Keep adding more items to expand your inventory.
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-primary">Add New Product</h1>
         <button className="border border-gray-300 rounded px-4 py-2 flex items-center">
