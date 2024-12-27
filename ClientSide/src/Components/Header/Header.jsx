@@ -53,7 +53,11 @@ const Header = () => {
             </span>
           </NavLink>
         )}
-
+        {!isSignedIn && (
+          <p className=" mr-10 bg-yellow-200/70 px-2 py-1 rounded">
+            Please sign in to get started !
+          </p>
+        )}
         {isSignedIn && (
           <NavLink
             className={({ isActive }) =>
