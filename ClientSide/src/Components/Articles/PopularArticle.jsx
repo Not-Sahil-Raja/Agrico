@@ -35,7 +35,7 @@ const PopularArticle = () => {
         to={`/article/${popularArticle[0]._id}`}
       >
         <img
-          src={popularArticle[0].image[0] ? popularArticle[3].image[0] : ""}
+          src={popularArticle[0].image[0] ? popularArticle[0].image[0] : ""}
           className=" aspect-square h-4/5 object-cover "
         />
         <div className=" text-black/65 font-medium my-2">
