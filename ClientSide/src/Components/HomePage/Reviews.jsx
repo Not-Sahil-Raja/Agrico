@@ -83,48 +83,51 @@ const reviewData = [
 
 const Reviews = () => {
   return (
-    <div className=" w-full h-full">
-      <div className=" w-full h-[25%]  flex flex-col justify-center items-center font-WorkSans">
-        <span className=" text-[5vh] font-semibold">Our Beloved Members</span>
-        <span className=" px-[17%] text-center opacity-85 font-medium">
+    <div className="w-full min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Heading Part  */}
+      <div className=" w-full sm:h-[25%] sm:py-0 py-4 h-fit mb-10  flex flex-col justify-center items-center font-Archivo">
+        <h1 className="sm:text-[5vh] text-2xl mb-4 font-semibold">
+          Our Beloved Members
+        </h1>
+        <h4 className="sm:px-[17%] sm:leading-right mt-2 leading-tight text-center text-black/65 font-medium">
           Enhance your skills and knowledge with our diverse learning styles
           including videos, courses, downloadable guides, and live sessions with
           experts.
-        </span>
+        </h4>
       </div>
-      <div className=" w-full h-[68%] overflow-hidden flex flex-col relative rounded-2xl">
-        <div className=" w-full h-full absolute from-[#05050505] to-[#2c422f8c]  bg-gradient-to-b z-30"></div>
+      <div className=" w-full h-fit overflow-hidden py-2 relative rounded-2xl">
+        <div className=" w-full h-full absolute from-[#05050505] to-[#2c422f8c]  bg-gradient-to-b z-30" />
         <motion.div
-          className="  flex-1 w-fit flex gap-[.5%]  relative py-[1%]"
+          className="flex space-x-4 pb-8 w-fit"
           animate={{ x: ["0%", "-60%", "0%"] }}
           transition={{
-            duration: 50,
-            repeat: Infinity,
-            ease: "linear",
-            repeatDelay: 0.5,
-            easings: "easeInOut",
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 50,
+              ease: "linear",
+            },
           }}
         >
           {reviewData.map((review, index) => (
             <div
-              className=" w-[25vw] h-full bg-[#ececec] rounded-2xl flex flex-col px-[1%] py-[1%] font-WorkSans drop-shadow-md text-[#000000be] "
+              className=" w-80 bg-white rounded-2xl flex flex-col p-4 drop-shadow-md text-gray-800 mb-4 md:mb-0 font-Archivo"
               key={index}
             >
-              <div className=" h-[25%] flex flex-col leading-none font-semibold ">
-                <span>{review.name}</span>
-                <span className=" text-[2vh] font-medium">{review.email}</span>
+              <div className="flex flex-col leading-none font-semibold mb-2">
+                <span className="text-lg">{review.name}</span>
+                <span className="text-sm font-medium text-gray-600">
+                  {review.email}
+                </span>
               </div>
-              <div className=" h-[55%]  flex ">
-                <div className=" py-[2%] leading-4 break-words overflow-hidden  text-ellipsis w-full h-[8vh] ">
-                  {review.review}
-                </div>
-              </div>
-              <div className=" h-[20%]"></div>
+              <p className="text-sm leading-snug overflow-hidden text-ellipsis">
+                {review.review}
+              </p>
             </div>
           ))}
         </motion.div>
         <motion.div
-          className="  flex-1 w-fit flex gap-[.5%]  relative py-[1%]"
+          className="flex space-x-4 pb-8 w-fit"
           animate={{ x: ["0%", "-65%", "0%"] }}
           transition={{
             duration: 45,
@@ -137,19 +140,18 @@ const Reviews = () => {
         >
           {reviewData.map((review, index) => (
             <div
-              className=" w-[25vw] h-full bg-[#ececec] rounded-2xl flex flex-col px-[1%] py-[1%] font-WorkSans drop-shadow-md text-[#000000be] "
+              className=" w-80 bg-white rounded-2xl flex flex-col p-4 drop-shadow-md text-gray-800 mb-4 md:mb-0 font-Archivo"
               key={index}
             >
-              <div className=" h-[25%] flex flex-col leading-none font-semibold ">
-                <span>{review.name}</span>
-                <span className=" text-[2vh] font-medium">{review.email}</span>
+              <div className="flex flex-col leading-none font-semibold mb-2">
+                <span className="text-lg">{review.name}</span>
+                <span className="text-sm font-medium text-gray-600">
+                  {review.email}
+                </span>
               </div>
-              <div className=" h-[55%]  flex ">
-                <div className=" py-[2%] leading-4 break-words overflow-hidden  text-ellipsis w-full h-[8vh] ">
-                  {review.review}
-                </div>
-              </div>
-              <div className=" h-[20%]"></div>
+              <p className="text-sm leading-snug overflow-hidden text-ellipsis">
+                {review.review}
+              </p>
             </div>
           ))}
         </motion.div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 
 const ShippingDetail = ({
   setCheckOutStage,
@@ -7,6 +8,7 @@ const ShippingDetail = ({
   setShippingDetail,
   shippingDetail,
 }) => {
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const handleShippingDetail = (e) => {
     e.preventDefault();
     if (
@@ -221,8 +223,8 @@ const ShippingDetail = ({
         </p>
         <button
           type="submit"
-          className=" mt-3 flex items-center justify-center w-full py-2 border border-stone-900 bg-[#BEEC6F] text-black"
-          onClick={() => {}}
+          className=" mt-3 flex items-center justify-center w-full py-2 border border-stone-900 bg-[#BEEC6F] text-black disabled:opacity-75 "
+          disabled={cartItems.length == 0}
         >
           Next
         </button>

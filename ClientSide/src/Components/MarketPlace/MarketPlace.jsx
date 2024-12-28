@@ -8,7 +8,7 @@ import Footer from "../HomePage/FooterPage";
 const MarketPlace = () => {
   return (
     <>
-      <div className=" mt-16">
+      <div className=" mt-20 selection:bg-[#3da13d] selection:text-white overflow-x-hidden">
         <MarketPlaceHoroSection />
         <TopItems />
         <AllItems />

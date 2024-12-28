@@ -25,7 +25,7 @@ const MarketPlaceRecomendation = () => {
     }
   }, [recommendedProducts]);
 
-  // * Fetch the recommended Products
+  // * Fetching the recommended Products
   // ! recommendation currently selects random
 
   const fetchRecomendedProducts = async () => {
@@ -63,7 +63,7 @@ const MarketPlaceRecomendation = () => {
 
   return (
     <div className="h-fit flex flex-col relative pt-10 font-Archivo bg-stone-100">
-      <div className="flex justify-between mb-4">
+      <div className="flex md:flex-row flex-col justify-between mb-4">
         <div className="text-xl font-semibold flex flex-col px-8 justify-center">
           <span className="text-3xl flex items-end">
             Explore our recommendations
@@ -73,7 +73,7 @@ const MarketPlaceRecomendation = () => {
           </span>
         </div>
         {/* Used to slide the product */}
-        <div className="gap-2 flex mr-24">
+        <div className="gap-2 flex md:mr-24 md:mt-0 mt-4 mx-auto">
           <button
             className="bg-stone-200 hover:bg-stone-300/70 disabled:opacity-60 active:scale-95 transition-all duration-300 aspect-square flex items-center justify-center h-fit p-1 rounded"
             onClick={prevSlide}

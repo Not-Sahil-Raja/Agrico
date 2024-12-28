@@ -3,6 +3,8 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { ResponsiveChartContainer } from "@mui/x-charts";
+import { Box, Container } from "@mui/material";
 
 const Sales = () => {
   const { getToken } = useAuth();
@@ -53,9 +55,9 @@ const Sales = () => {
   }));
 
   return (
-    <div className=" flex flex-col w-full h-[90svh] px-3 py-2 font-Archivo  justify-stretch bg-stone-100  rounded-md space-x-4 ">
+    <div className=" flex flex-col w-full md:h-[90svh] h-fit px-3 py-2 font-Archivo  justify-stretch bg-stone-100  rounded-md md:space-x-4 space-x-1">
       <h1 className="text-2xl font-bold mb-4">Sales Dashboard</h1>
-      <div className=" flex gap-3 grow">
+      <div className=" flex md:flex-row flex-col gap-3 grow md:mb-0 mb-5">
         <div className=" flex-[4] flex flex-col gap-3">
           {/* Rendering the average order , total Revenue , returningCustomers */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -96,24 +98,33 @@ const Sales = () => {
             ))}
           </div>
           {/* Rendering the LineChart */}
-          <div className=" border flex flex-col bg-white items-center  p-4 rounded-lg grow">
-            <p className=" text-xl font-semibold mb-2">Weekly Sales Summary</p>
-
-            <LineChart
-              dataset={chartData}
-              xAxis={[{ scaleType: "band", dataKey: "day" }]}
-              series={[
-                { dataKey: "totalSales", label: "Total Sales" },
-                { dataKey: "totalOrders", label: "Total Orders" },
-              ]}
-              width={650}
-              height={300}
-            />
+          <div className="border md:flex flex-col bg-white items-center p-4 rounded-lg grow">
+            <p className="text-xl font-semibold mb-2">Weekly Sales Summary</p>
+            <Box sx={{ width: "100%", height: "100%" }}>
+              <LineChart
+                xAxis={[
+                  {
+                    scaleType: "point",
+                    data: chartData.map((item) => item.day),
+                  },
+                ]}
+                series={[
+                  {
+                    data: chartData.map((item) => item.totalSales),
+                    label: "Total Sales",
+                  },
+                  {
+                    data: chartData.map((item) => item.totalOrders),
+                    label: "Total Orders",
+                  },
+                ]}
+              />
+            </Box>
           </div>
         </div>
         <div className=" border flex flex-col bg-white gap-3 p-4 rounded-lg grow">
           <h1 className=" text-xl font-semibold mb-2">Top Selling Products</h1>
-          <div className=" flex w-full justify-between border-b mb-3 px-4 font-semibold text-neutral-500">
+          <div className="md:text-base text-sm flex w-full justify-between border-b mb-3 md:px-4 font-semibold text-neutral-500">
             <p>Products</p>
             <p>Total Quantity</p>
           </div>
@@ -123,7 +134,7 @@ const Sales = () => {
                 className=" flex bg-stone-100 border justify-between items-center px-4 py-4"
                 key={index}
               >
-                <div className=" max-w-32 line-clamp-2 font-semibold text-black/80">
+                <div className=" max-w-32 line-clamp-2 font-semibold text-black/80 border-r leading-tight mr-1">
                   {prd.name}
                 </div>
                 <div className=" mr-2">{prd.totalQuantity}</div>

@@ -16,6 +16,7 @@ const SellerDashboard = () => {
 
   const sellerDetail = useSelector((state) => state.sellerDetail);
 
+  //* Setting the seller detail in Local storage through redux toolkit
   React.useEffect(() => {
     if (sellerDetail && sellerDetail.sellerDetails.sellerLoggedIn) {
       setIsSellerLoggedIn(true);
@@ -42,11 +43,13 @@ const SellerDashboard = () => {
   };
 
   return (
-    <div className="pt-16 h-[100svh] flex">
+    <div className="pt-16 h-[100svh]  w-screen overflow-x-hidden md:flex ">
       {isSellerLoggedIn ? (
         <>
           <Sidebar setActivePage={setActivePage} activePage={activePage} />
-          <div className="content flex-1 pr-2">{renderPage()}</div>
+          <div className="content md:pl-0 pl-16 grow md:flex-1 pr-2">
+            {renderPage()}
+          </div>
         </>
       ) : (
         <SellerDetails />

@@ -4,11 +4,45 @@ import vid from "/farming-02.gif";
 import { motion } from "framer-motion";
 
 const OurProductDetails = () => {
+  const cardData = [
+    {
+      percentage: "95%",
+      title: "Client Satisfaction",
+      description:
+        "They seek educational resources to improve their skills, increase yields, and ultimately achieve greater success.",
+      bgColor: "bg-[#ececec]",
+      textColor: "text-[#000000ad]",
+    },
+    {
+      percentage: "100+",
+      title: "Farmers Educated",
+      description:
+        "They seek educational resources to improve their skills, increase yields, and ultimately achieve greater success.",
+      bgColor: "bg-[#56a53e]",
+      textColor: "text-white",
+    },
+    {
+      percentage: "400+",
+      title: "Products Sold",
+      description:
+        "Products are designed to help farmers grow their knowledge and their farms.",
+      bgColor: "bg-[#ececec]",
+      textColor: "text-[#000000ad]",
+    },
+    {
+      percentage: "100%",
+      title: "Fresh Food",
+      description:
+        "We offer practical, farmer-focused educational experiences designed to increase yields and profitability.",
+      bgColor: "bg-[#ececec]",
+      textColor: "text-[#000000ad]",
+    },
+  ];
   return (
-    <motion.div className=" h-[100vh] w-[100vw]  pt-[3%] select-none">
+    <motion.div className=" h-screen w-screen pt-[3%] select-none">
       <div className=" w-full h-full flex flex-col">
         <motion.div
-          className=" h-[20%]  flex"
+          className="sm:h-[20%] h-fit flex sm:flex-row flex-col"
           initial={{ y: -100, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{
@@ -19,7 +53,7 @@ const OurProductDetails = () => {
           }}
           viewport={{ once: true }}
         >
-          <div className=" flex-1 font-WorkSans flex flex-col items-start justify-center text-3xl font-semibold">
+          <div className=" flex-1 font-WorkSans flex flex-col items-start justify-center md:text-xl lg:text-3xl font-semibold">
             <span className="pl-[10%] flex gap-[1%] whitespace-nowrap items-center">
               Cultivating a Future of{" "}
               <Wheat className=" opacity-50" size={30} />
@@ -27,7 +61,7 @@ const OurProductDetails = () => {
             <span className="pl-[10%]  ">Sustainable Agriculture</span>
           </div>
           <div className=" flex-[1.5]  flex flex-col">
-            <div className=" w-full h-[75%] py-[2%] pr-[10%] pl-[5%] font-WorkSans text-[#000000a6] font-medium text-[2.3vh] leading-tight">
+            <div className=" w-full sm:h-[75%] h-fit py-[2%] pr-[10%] text-ellipsis overflow-hidden pl-[5%] font-WorkSans text-[#000000a6] font-medium xl:text-[2.3vh] xl:leading-tight lg:text-lg sm:text-base text-sm leading-none">
               Agrico empowers farmers to grow their knowledge and their farms.
               We offer practical, farmer-focused educational experiences
               designed to increase yields and profitability. Our diverse
@@ -39,7 +73,7 @@ const OurProductDetails = () => {
             </div>
           </div>
         </motion.div>
-        <div className=" h-[45%] px-[5%] py-[1%]">
+        <div className=" sm:h-[45%] grow px-[5%] py-[1%]">
           <motion.div
             className=" h-full w-full overflow-hidden rounded-2xl drop-shadow relative"
             initial={{ scale: 0.4, opacity: 50 }}
@@ -58,9 +92,9 @@ const OurProductDetails = () => {
             <div className=" w-full h-full absolute z-10 bg-gradient-to-b  from-[#d8d4d438] to-[#242722e8] opacity-50 "></div>
           </motion.div>
         </div>
-        <div className=" h-[35%]">
+        <div className="sm:h-[35%] h-fit sm:mt-auto mt-2">
           <motion.div
-            className=" w-full h-full flex justify-center items-center gap-[1%] py-[1%] px-[5%] font-WorkSans"
+            className=" w-full h-full flex sm:flex-row flex-col justify-center items-center gap-[1%] py-[1%] px-[5%] font-WorkSans"
             initial="hidden"
             whileInView="visible"
             transition={{ duration: 0.5, delay: 0.5, staggerChildren: 0.5 }}
@@ -70,70 +104,27 @@ const OurProductDetails = () => {
               visible: { opacity: 1 },
             }}
           >
-            <motion.div
-              className=" h-full flex flex-col flex-1 bg-[#ececec] rounded-2xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className=" h-[35%] font-bold text-[5vh] px-[5%] pt-[2%]">
-                95%
-              </div>
-              <div className=" h-[15%] font-medium px-[5%]">
-                Client Satisfaction
-              </div>
-              <div className=" h-[50%] font-medium px-[5%] text-[2vh] text-[#000000ad]">
-                They seek educational resources to improve their skills,
-                increase yields, and ultimately achieve greater success.
-              </div>
-            </motion.div>
-            <motion.div
-              className=" h-full flex flex-col flex-1 bg-[#56a53e] text-white rounded-2xl "
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className=" h-[35%] font-bold text-[5vh] px-[5%] pt-[2%]">
-                100+
-              </div>
-              <div className=" h-[15%] font-medium px-[5%]">
-                Farmers Educated
-              </div>
-              <div className=" h-[50%] font-medium px-[5%] text-[2vh] text-[#ffffff]">
-                They seek educational resources to improve their skills,
-                increase yields, and ultimately achieve greater success.
-              </div>
-            </motion.div>
-            <motion.div
-              className=" h-full flex flex-col flex-1 bg-[#ececec] rounded-2xl "
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className=" h-[35%] font-bold text-[5vh] px-[5%] pt-[2%]">
-                400+
-              </div>
-              <div className=" h-[15%] font-medium px-[5%]">Products Sold</div>
-              <div className=" h-[50%] font-medium px-[5%] text-[2vh] text-[#000000ad] overflow-hidden text-ellipsis">
-                Products are designed to help farmers grow their knowledge and
-                their farms.
-              </div>
-            </motion.div>
-            <motion.div
-              className=" h-full flex flex-col flex-1 bg-[#ececec] rounded-2xl "
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className=" h-[35%] font-bold text-[5vh] px-[5%] pt-[2%]">
-                100%
-              </div>
-              <div className=" h-[15%] font-medium px-[5%]">Fresh Food</div>
-              <div className=" h-[50%] font-medium px-[5%] text-[2vh] text-[#000000ad] overflow-hidden text-ellipsis">
-                We offer practical, farmer-focused educational experiences
-                designed to increase yields and profitability.
-              </div>
-            </motion.div>
+            {cardData.map((card, index) => (
+              <motion.div
+                key={index}
+                className={`sm:h-full h-fit flex flex-col flex-1 ${card.bgColor} rounded-2xl`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="h-[35%] font-bold sm:text-[5vh] text-xl px-[5%] pt-[2%]">
+                  {card.percentage}
+                </div>
+                <div className="h-[15%] font-medium px-[5%] sm:text-base text-sm sm:mb-0 mb-1">
+                  {card.title}
+                </div>
+                <div
+                  className={`h-[50%] font-medium px-[5%] sm:mb-0 mb-1 xl:text-[2vh] lg:text-base text-sm leading-none ${card.textColor}`}
+                >
+                  {card.description}
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>

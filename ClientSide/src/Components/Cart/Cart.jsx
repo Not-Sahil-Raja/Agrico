@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Package, CreditCard, ClipboardCheckIcon } from "lucide-react";
+import {
+  Package,
+  CreditCard,
+  ClipboardCheckIcon,
+  ShoppingCartIcon,
+} from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 
@@ -81,9 +86,9 @@ const Cart = () => {
 
   return (
     <div className=" overflow-hidden font-Archivo">
-      <motion.div className=" flex w-full h-fit min-h-[100svh]">
+      <motion.div className="flex md:flex-row flex-col w-full h-fit min-h-[100svh]">
         <div className=" flex-1 mt-14 bg-stone-200 ">
-          <div className="  flex-col py-6  lg:pl-[18%] lg:pr-[15%] 2xl:pl-[25%] 2xl:pr-[22%]">
+          <div className="  flex-col py-6  2xl:pl-[25%] 2xl:pr-[22%] lg:pl-[18%] lg:pr-[15%] px-5">
             <h2 className=" text-lg font-semibold">Cart Informations </h2>
             <h3 className=" text-sm text-black/70 mb-5">
               By placing an order you agree to our{" "}
@@ -97,21 +102,22 @@ const Cart = () => {
                   <CartCard key={index} product={product} />
                 ))
               ) : (
-                <>
-                  <div>Cart Is Empty</div>
-                </>
+                <div className="bg-yellow-200/75 w-fit px-4 py-2 shadow-lg flex items-center space-x-2">
+                  <ShoppingCartIcon className="w-6 h-6 text-yellow-600" />
+                  <span className=" text-yellow-800">Cart Is Empty !</span>
+                </div>
               )}
             </div>
           </div>
         </div>
         <div className="  flex-1 mt-14 ">
-          <div className="  flex-col py-6  lg:pl-[18%] lg:pr-[15%] 2xl:pl-[25%] 2xl:pr-[22%]">
+          <div className="  flex-col py-6  lg:pl-[18%] lg:pr-[15%] 2xl:pl-[25%] 2xl:pr-[22%] px-5">
             <h2 className=" text-lg font-semibold">Checkout Process</h2>
             <h3 className=" text-sm text-black/70 mb-5">
               Complete your purchase by providing all the details
             </h3>
             {/* Full Checkout Process */}
-            <div className=" w-full  px-3 mb-4">
+            <div className=" w-full px-3 mb-4">
               <div className=" flex bg-stone-200/50 rounded-md px-2 py-3">
                 <div className=" flex-1 flex flex-col justify-center items-center text-black/100">
                   <CreditCard className=" w-6 h-6 " />

@@ -66,8 +66,10 @@ const Inventory = () => {
     fetchInventoryDetails();
   }, []);
   return (
-    <div className="space-y-8 bg-stone-100 min-h-[90svh] px-3 py-2 font-Archivo mr-2">
-      <h1 className="text-3xl font-bold text-gray-800">Inventory Management</h1>
+    <div className=" w-full space-y-8 bg-stone-100 min-h-[90svh] px-3 py-2 font-Archivo mr-2">
+      <h1 className="md:text-3xl text-xl font-bold text-gray-800">
+        Inventory Management
+      </h1>
 
       {/* Inventory Card details  */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -85,14 +87,14 @@ const Inventory = () => {
       </div>
 
       {/* List of current inventory of the seller */}
-      <div className="p-4 bg-white rounded-lg shadow">
+      <div className="p-4 bg-white flex flex-col rounded-lg shadow">
         <div className="mb-4">
           <h2 className="text-lg font-bold">Current Inventory</h2>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto ">
           {inventoryDetails.currentInventory &&
           inventoryDetails.currentInventory.length > 0 ? (
-            <table className="min-w-full bg-white">
+            <table className="w-full  bg-white md:text-base text-sm">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b text-left">Name</th>

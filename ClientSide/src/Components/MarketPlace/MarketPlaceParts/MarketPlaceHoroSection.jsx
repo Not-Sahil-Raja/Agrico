@@ -2,14 +2,14 @@ import React from "react";
 
 const MarketPlaceHoroSection = () => {
   return (
-    <div className="  flex w-full h-[90svh] font-Archivo">
-      <div className=" h-full flex flex-col grow">
+    <div className="flex md:flex-row flex-col w-full h-[90svh] font-Archivo">
+      <div className=" h-full flex flex-col grow ">
         <div className="  flex-[1.3] flex">
-          <div className=" my-5 mx-5 flex flex-col p-5 bg-stone-100 rounded-md justify-center w-full">
-            <h2 className=" text-5xl max-w-[40%] leading-none font-semibold">
+          <div className="lg:m-5 md:m-3 m-2 flex flex-col md:p-5 p-2 bg-stone-100 rounded-md justify-center w-full">
+            <h2 className="md:text-5xl text-3xl md:max-w-[40%] leading-none font-semibold">
               Buy directly from farmers at our marketplace
             </h2>
-            <h4 className="max-w-[40%] pl-1 mt-1 text-black/75">
+            <h4 className="md:max-w-[40%] pl-1 mt-1 text-black/75">
               Experience fresh produce and support local farmers by purchasing
               directly from our marketplace.
             </h4>
@@ -52,8 +52,8 @@ const MarketPlaceHoroSection = () => {
           </div>
         </div>
       </div>
-      <div className=" w-1/3 h-full flex">
-        <div className="bg-green-300 m-4 w-full rounded-md overflow-hidden relative">
+      <div className=" md:w-1/3 w-full md:h-full h-4/6 flex">
+        <div className=" m-4 w-full rounded-md overflow-hidden relative">
           <img
             src="https://images.unsplash.com/photo-1615671524701-9c3dde8fdaa0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""

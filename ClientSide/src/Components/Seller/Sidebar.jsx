@@ -59,7 +59,7 @@ const Sidebar = ({ setActivePage, activePage }) => {
 
   return (
     <motion.div
-      className={` h-full shadow-md p-2 pt-4 flex flex-col gap-3 font-Archivo overflow-hidden`}
+      className={`md:h-full h-[calc(100vh-4rem)] md:relative absolute z-10 md:bg-transparent bg-white shadow-md p-2 pt-4 flex flex-col gap-3 font-Archivo overflow-hidden`}
       variants={ContainersVariant}
       animate={AnimationControl}
       initial="open"

@@ -5,10 +5,10 @@ const ArticleCard = ({ ArticleData, index }) => {
   return (
     <NavLink
       key={index}
-      className="  px-2 py-4 flex justify-center font-Archivo"
+      className="md:px-2 py-4 flex justify-center font-Archivo"
       to={`/article/${ArticleData._id}`}
     >
-      <div className=" flex flex-col gap-2 justify-start w-96">
+      <div className=" flex flex-col gap-2 justify-start sm:w-96 w-ful">
         <img
           src={ArticleData.image[0]}
           alt={ArticleData.title ? ArticleData.title : "Article Image"}

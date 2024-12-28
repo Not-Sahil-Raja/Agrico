@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 const PopularArticle = () => {
   const [popularArticle, setPopularArticle] = useState([]);
   const { getToken } = useAuth();
-
+  // * Fetching Popular Articles
   useEffect(() => {
     const fetchPopularArticle = async () => {
       const token = await getToken();
@@ -29,9 +29,9 @@ const PopularArticle = () => {
   }, []);
 
   return popularArticle.length > 0 ? (
-    <div className=" flex h-[90%] gap-2 2xl:gap-5 justify-stretch">
+    <div className=" flex md:flex-row flex-col h-[90%] gap-2 2xl:gap-5 justify-stretch">
       <NavLink
-        className=" flex font-Archivo flex-col min-w-[40vw]"
+        className=" flex font-Archivo flex-col min-w-[40vw] md:mb-0 mb-5"
         to={`/article/${popularArticle[0]._id}`}
       >
         <img
@@ -52,7 +52,7 @@ const PopularArticle = () => {
             : "Description"}
         </div>
       </NavLink>
-      <div className=" grow  flex flex-col gap-2 justify-stretch font-Archivo">
+      <div className=" grow  flex flex-col gap-2 justify-stretch ">
         {popularArticle.slice(1).map((article, index) => (
           <NavLink
             key={index}
@@ -83,7 +83,7 @@ const PopularArticle = () => {
       </div>
     </div>
   ) : (
-    <div className=" h-[20vh] w-full flex items-center justify-center  shadow-inner  rounded font-Archivo">
+    <div className=" h-[20vh] w-full flex items-center justify-center  shadow-inner  rounded ">
       <span className=" animate-pulse font-medium">Wait a moment...</span>
     </div>
   );

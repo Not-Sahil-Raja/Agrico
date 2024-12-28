@@ -51,6 +51,8 @@ const CreateBlogPage = () => {
     "image",
   ];
   const { getToken } = useAuth();
+
+  // * Adding the article or blog to DB
   const blogCreateHandler = async () => {
     const token = await getToken();
 
@@ -97,7 +99,7 @@ const CreateBlogPage = () => {
   };
 
   return (
-    <div className="w-full h-fit min-h-svh bg-gradient-to-r from-zinc-100 via-gray-300 to-zinc-300 pt-[9vh] pb-[3vh] flex relative">
+    <div className="w-full h-fit md:min-h-svh bg-gradient-to-r from-zinc-100 via-gray-300 to-zinc-300 pt-[9vh] pb-[3vh] gap-2 flex md:flex-row flex-col relative">
       <div>
         <AnimatePresence>
           {response === true && <BlogSubmissionToast />}
@@ -106,15 +108,15 @@ const CreateBlogPage = () => {
       </div>
 
       <div
-        className={` flex-[1.5] max-w-[50vw] ${
+        className={` flex-[1.5] md:max-w-[50vw] ${
           isLoading && "pointer-events-none"
         }`}
       >
-        <div className=" bg-white ml-10 mr-3 rounded-md h-fit 2xl:ml-[10vw] font-Archivo">
-          <div className=" w-full h-[10%] border-b-2 px-3 py-1">
-            <h1 className="text-xl font-semibold pb-3">Create Blog</h1>
-          </div>
-          <div className=" px-5 py-3 flex flex-col gap-3">
+        <div className=" bg-white md:ml-10 md:mr-3 mx-3 rounded-md h-fit 2xl:ml-[10vw] font-Archivo">
+          <h1 className=" font-Archivo text-xl text-center pt-2 mb-2 pb-2 border-b">
+            Create Blog
+          </h1>
+          <div className="md:px-5 px-1 py-3 flex flex-col gap-3">
             <div className=" border px-3 py-2 rounded-xl">
               <label className=" uppercase font-semibold text-black/85">
                 Title
@@ -276,7 +278,10 @@ const CreateBlogPage = () => {
           </div>
         </div>
       </div>
-      <div className=" max-w-[45vw] overflow-hidden flex-1 bg-white rounded mr-10 px-5 py-5">
+      <div className="md:max-w-[45vw] overflow-hidden flex-1 bg-white rounded md:mr-10 mx-2 px-5 py-5">
+        <h1 className=" font-Archivo text-xl text-center mb-2 pb-2 border-b">
+          Preview Article
+        </h1>
         <BlogPreview
           title={title}
           shortDescription={shortDescription}

@@ -17,7 +17,6 @@ const SellerOverview = ({ setActivePage }) => {
     formattedReport: [],
   });
 
-  // used to format value for the barchart
   const valueFormatter = (value, dataKey) => {
     if (dataKey === "totalSales") {
       return `$${value.toFixed(2)}`;
@@ -25,7 +24,6 @@ const SellerOverview = ({ setActivePage }) => {
     return value;
   };
 
-  //* Fetch all the seller overview
   const fetchSellerOverview = async () => {
     const token = await getToken();
     axios
@@ -55,17 +53,16 @@ const SellerOverview = ({ setActivePage }) => {
   }, []);
 
   return (
-    <div className=" flex flex-col w-full h-fit px-3 py-2 font-Archivo justify-stretch bg-stone-100 rounded-md ">
-      <div className=" mb-2">
+    <div className="flex flex-col w-full h-fit md:h-[90svh] px-3 py-2 font-Archivo justify-stretch bg-stone-100 rounded-md">
+      <div className="mb-2">
         <h1 className="text-2xl font-semibold">Welcome User</h1>
-        <p className=" text-black/50 font-semibold">
+        <p className="text-black/50 font-semibold">
           Here is a quick overview of your sales and other detail.
         </p>
       </div>
-      <div className=" flex h-[77svh] gap-2 mb-2">
-        {/* Rendering the total sales and orders overview */}
-        <div className=" flex-1  flex flex-col gap-3">
-          <div className="  flex gap-2">
+      <div className="flex flex-col md:flex-row h-[77svh] gap-2 mb-2">
+        <div className="flex-1 flex flex-col gap-3">
+          <div className="flex flex-col md:flex-row gap-2">
             {[
               {
                 title: "Total Sales",
@@ -79,99 +76,103 @@ const SellerOverview = ({ setActivePage }) => {
               },
             ].map((arr, index) => (
               <div
-                className=" grow flex flex-col border border-stone-300 bg-white rounded-lg shadow"
+                className="grow flex flex-col border border-stone-300 bg-white rounded-lg shadow"
                 key={index}
               >
-                <div className=" flex flex-col px-3 py-2 h-full gap-2">
-                  <h2 className=" text-xl font-semibold">{arr.title}</h2>
-                  <p className=" text-3xl font-semibold py-1 px-3">
+                <div className="flex flex-col px-3 py-2 h-full gap-2">
+                  <h2 className="text-xl font-semibold">{arr.title}</h2>
+                  <p className="text-3xl font-semibold py-1 px-3">
                     {arr.value}
                   </p>
                   <div className="flex gap-2 text-black/70">
-                    <p className=" flex gap-1 bg-green-200 text-green-800 border border-green-400 rounded-full px-1 font-semibold">
-                      <ArrowUp className=" w-4 font-semibold" /> 5%
+                    <p className="flex gap-1 bg-green-200 text-green-800 border border-green-400 rounded-full px-1 font-semibold">
+                      <ArrowUp className="w-4 font-semibold" /> 5%
                     </p>
                     vs last month
                   </div>
                 </div>
 
                 <div
-                  className=" flex bg-stone-200 font-semibold hover:bg-stone-300/80 duration-200 transition-all cursor-pointer text-black/60 border-t border-stone-300 px-4 py-5 justify-between"
+                  className="flex bg-stone-200 font-semibold hover:bg-stone-300/80 duration-200 transition-all cursor-pointer text-black/60 border-t border-stone-300 px-4 py-5 justify-between"
                   onClick={() => setActivePage(arr.link)}
                 >
                   <p>View More</p>{" "}
-                  <p className=" bg-white border border-stone-400 p-1 rounded-full">
-                    <ArrowUpRightIcon className=" w-4 h-4" />
+                  <p className="bg-white border border-stone-400 p-1 rounded-full">
+                    <ArrowUpRightIcon className="w-4 h-4" />
                   </p>
                 </div>
               </div>
             ))}
           </div>
-          {/* Total customers of the seller  */}
-          <div className=" flex ">
-            <div className=" grow flex flex-col border border-stone-300 bg-white rounded-lg shadow">
-              <div className=" flex flex-col px-3 py-2 h-full gap-2 justify-aroun</div>d">
-                <h2 className=" text-xl font-semibold">Customers</h2>
-                <p className=" text-3xl font-semibold py-1 px-3">
+          <div className="flex">
+            <div className="grow flex flex-col border border-stone-300 bg-white rounded-lg shadow">
+              <div className="flex flex-col px-3 py-2 h-full gap-2 justify-around">
+                <h2 className="text-xl font-semibold">Customers</h2>
+                <p className="text-3xl font-semibold py-1 px-3">
                   {overviewData.totalCustomers}
                 </p>
-                <div className=" flex items-center justify-between">
+                <div className="flex items-center justify-between">
                   <div className="flex gap-2 text-black/70">
-                    <p className=" flex gap-1 bg-green-200 text-green-800 border border-green-400 rounded-full px-1 font-semibold">
-                      <ArrowUp className=" w-4 font-semibold" /> 5%
+                    <p className="flex gap-1 bg-green-200 text-green-800 border border-green-400 rounded-full px-1 font-semibold">
+                      <ArrowUp className="w-4 font-semibold" /> 5%
                     </p>
                     vs last month
                   </div>
-                  <div className=" flex border-2 border-b-4 rounded-lg px-3 py-2 mr-7 items-center justify-between">
-                    <div className=" bg-[#d1ffd1] h-full aspect-square flex items-center justify-center rounded-lg border-2 border-[#84da73] mr-4 p-2">
-                      <Crown className=" text-[#3aaa3a]" />
+                  <div className="flex border-2 border-b-4 rounded-lg px-3 py-2 mr-7 items-center justify-between">
+                    <div className="bg-[#d1ffd1] h-full aspect-square flex items-center justify-center rounded-lg border-2 border-[#84da73] mr-4 p-2">
+                      <Crown className="text-[#3aaa3a]" />
                     </div>
-                    <div className=" flex flex-col px-2">
-                      <p className=" text-lg font-semibold">
+                    <div className="flex flex-col px-2">
+                      <p className="text-lg font-semibold">
                         {overviewData.newCustomer}
                       </p>
-                      <p className=" text-black/70">New Customers </p>
+                      <p className="text-black/70">New Customers </p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div
-                className=" flex bg-stone-200 font-semibold hover:bg-stone-300/80 duration-200 transition-all cursor-pointer text-black/60 border-t border-stone-300 px-4 py-5 justify-between"
+                className="flex bg-stone-200 font-semibold hover:bg-stone-300/80 duration-200 transition-all cursor-pointer text-black/60 border-t border-stone-300 px-4 py-5 justify-between"
                 onClick={() => setActivePage("inventory")}
               >
                 <p>View More</p>{" "}
-                <p className=" bg-white border border-stone-400 p-1 rounded-full">
-                  <ArrowUpRightIcon className=" w-4 h-4" />
+                <p className="bg-white border border-stone-400 p-1 rounded-full">
+                  <ArrowUpRightIcon className="w-4 h-4" />
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Total sales report area and graph  */}
-        <div className=" flex-1 w-1/2 flex flex-col border border-stone-300 bg-white rounded-lg shadow">
-          <div className=" flex flex-col px-3 py-2 gap-2 ">
-            <h2 className=" text-xl font-semibold">Sales Report Area</h2>
-            <p className=" text-3xl font-semibold py-1 ">
+        <div className="flex-1 w-full md:w-1/2 flex flex-col border border-stone-300 bg-white rounded-lg shadow">
+          <div className="flex flex-col px-3 py-2 gap-2">
+            <h2 className="text-xl font-semibold">Sales Report Area</h2>
+            <p className="text-3xl font-semibold py-1">
               {overviewData.salesAreas}
             </p>
             <div className="flex gap-2 text-black/70">
-              <p className=" flex gap-1 bg-green-200 text-green-800 border border-green-400 rounded-full px-1 font-semibold">
-                <ArrowUp className=" w-4 font-semibold" /> 12%
+              <p className="flex gap-1 bg-green-200 text-green-800 border border-green-400 rounded-full px-1 font-semibold">
+                <ArrowUp className="w-4 font-semibold" /> 12%
               </p>
               vs last month
             </div>
           </div>
 
-          <BarChart
-            dataset={overviewData.formattedReport}
-            xAxis={[{ scaleType: "band", dataKey: "month" }]}
-            series={[
-              { dataKey: "totalOrders", label: "Total Orders", valueFormatter },
-              { dataKey: "totalSales", label: "Total Sales", valueFormatter },
-            ]}
-          />
+          <div className="w-full h-[300px] md:h-full">
+            <BarChart
+              dataset={overviewData.formattedReport}
+              xAxis={[{ scaleType: "band", dataKey: "month" }]}
+              series={[
+                {
+                  dataKey: "totalOrders",
+                  label: "Total Orders",
+                  valueFormatter,
+                },
+                { dataKey: "totalSales", label: "Total Sales", valueFormatter },
+              ]}
+            />
+          </div>
         </div>
       </div>
     </div>

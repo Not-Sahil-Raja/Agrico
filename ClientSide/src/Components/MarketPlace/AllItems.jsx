@@ -61,15 +61,15 @@ const AllItems = () => {
   return (
     <>
       <div className=" h-fit flex flex-col relative pt-10 font-Archivo bg-stone-100">
-        <div className=" text-xl font-semibold  flex flex-col px-8  justify-center">
+        <div className=" text-xl font-semibold md:text-left text-center flex flex-col px-8  justify-center">
           <span className="text-3xl flex items-end">Buy AnyThing You Want</span>
           <span className=" opacity-70 font-normal text-base">
             Get the Best Quality Products at Best Prices.
           </span>
         </div>
-        <div className=" flex items-center px-9 mt-3 mb-3">
+        <div className=" flex md:flex-row flex-col items-center gap-3 md:gap-0 md:px-9 px-2 mt-3 mb-3 overflow-hidden">
           {/* Search area */}
-          <div className="relative flex items-center border-r border-stone-300 pr-4 mr-3">
+          <div className="relative flex items-center md:border-r border-stone-300 md:pr-4 md:mr-3">
             <input
               type="text"
               name=""
@@ -87,35 +87,36 @@ const AllItems = () => {
               Search
             </button>
           </div>
-
-          {/* Iterate over all the filter types */}
-          {filterTypes.map((filter) => (
-            <label
-              key={filter.value}
-              className={`ml-4 px-4 py-2 rounded-md cursor-pointer transition-all duration-300 ease-in-out ${
-                selectedFilter === filter.value
-                  ? "bg-[#738d73] text-white"
-                  : "bg-neutral-200 "
-              }`}
-            >
-              <input
-                type="radio"
-                name="filter"
-                value={filter.value}
-                checked={selectedFilter === filter.value}
-                onChange={() => setSelectedFilter(filter.value)}
-                className="hidden"
-              />
-              {filter.label}
-            </label>
-          ))}
+          <div className=" flex flex-wrap  gap-2">
+            {/* Iterate over all the filter types */}
+            {filterTypes.map((filter) => (
+              <label
+                key={filter.value}
+                className={`ml-4 px-4 py-2 rounded-md  cursor-pointer transition-all duration-300 ease-in-out ${
+                  selectedFilter === filter.value
+                    ? "bg-[#738d73] text-white"
+                    : "bg-neutral-200 "
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="filter"
+                  value={filter.value}
+                  checked={selectedFilter === filter.value}
+                  onChange={() => setSelectedFilter(filter.value)}
+                  className="hidden"
+                />
+                {filter.label}
+              </label>
+            ))}
+          </div>
         </div>
 
         {/* Render all the product accordingly  */}
         {filteredItems.length > 0 ? (
           <>
             <motion.div
-              className=" h-fit w-full  grid grid-cols-4 2xl:grid-cols-5 gap-2 px-[2%] py-[2vh] row-auto "
+              className=" h-fit w-full grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:gap-2 gap-4 md:px-[2%] px-5 py-[2vh] row-auto "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -131,9 +132,9 @@ const AllItems = () => {
           <ShowCurrentState currentState={currentFetchingState} />
         )}
         {/* Pagination part  */}
-        <div className=" flex p-3 gap-2 justify-center w-full">
+        <div className=" flex md:p-3 p-1 md:gap-2 gap-1 justify-center items-center w-full flex-wrap">
           <button
-            className=" h-fit my-auto mr-6 bg-zinc-300/75 px-3 py-1 rounded-md border border-zinc-400 disabled:opacity-65"
+            className=" h-fit my-auto md:mr-6 mr-1 bg-zinc-300/75 md:px-3 md:py-1 rounded-md border border-zinc-400 disabled:opacity-65"
             onClick={() =>
               setActivePage((prevIndex) => {
                 return Math.max(prevIndex - 1, 1);
@@ -147,7 +148,7 @@ const AllItems = () => {
           {[...Array(10).keys()].map((i) => (
             <button
               key={i}
-              className={`   border-neutral-400/50 rounded border aspect-square transition-colors duration-200 ease-in-out w-9 ${
+              className={`   border-neutral-400/50 rounded border aspect-square transition-colors duration-200 ease-in-out md:w-9 w-6 h-6 ${
                 i + 1 === activePage
                   ? "bg-[#56684b] text-white hover:bg-[#56684b]/80"
                   : "bg-neutral-200/65 hover:bg-neutral-300/90"
@@ -158,7 +159,7 @@ const AllItems = () => {
             </button>
           ))}
           <button
-            className=" h-fit my-auto ml-6 bg-zinc-300/75 px-3 py-1 rounded-md border border-zinc-400 disabled:opacity-65"
+            className=" h-fit my-auto md:ml-6 ml-1 bg-zinc-300/75 md:px-3 md:py-1 rounded-md border border-zinc-400 disabled:opacity-65"
             onClick={() =>
               setActivePage((prevIndex) => {
                 return Math.min(prevIndex + 1, 10);

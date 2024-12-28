@@ -41,7 +41,7 @@ function Article() {
         <div className=" w-full h-full pt-[9vh]  ">
           <div className=" w-full flex flex-col">
             {/* Popular Article Section */}
-            <div className=" flex flex-col h-[100svh] px-20">
+            <div className=" flex flex-col md:h-[100svh] h-fit lg:px-20 md:px-10 px-3">
               <div className="   flex flex-col text-[#242323] whitespace-nowrap font-Archivo py-1">
                 <span className="font-medium text-3xl text-[#242424] leading-none">
                   Popular Article
@@ -56,7 +56,7 @@ function Article() {
             </div>
 
             {/* Latest Article Section */}
-            <div className=" w-full h-fit my-7 px-20">
+            <div className=" w-full h-fit md:my-7 my-4 lg:px-20 md:px-10 px-3">
               <div className=" flex flex-col text-[#242323] whitespace-nowrap  py-1 mb-6">
                 <span className=" font-medium text-3xl text-[#242424] leading-none">
                   Latest Articles

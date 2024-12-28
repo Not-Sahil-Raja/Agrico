@@ -44,7 +44,7 @@ const EachArticle = () => {
 
   return (
     <div className=" pt-20">
-      <div className=" flex flex-col px-10 pb-10 2xl:px-52 lg:px-40 selection:bg-[#a6bb6d] selection:text-white">
+      <div className=" flex flex-col pb-10 2xl:px-52 lg:px-40 sm:px-10 px-3 selection:bg-[#a6bb6d] selection:text-white">
         <NavLink
           to="/article"
           className="text-black/70 font-Archivo hover:underline underline-offset-1"
@@ -70,7 +70,7 @@ const EachArticle = () => {
         </div>
         <div className=" mb-3">
           {title.length > 0 && (
-            <h1 className="text-4xl py-2 px-20 text-center text-wrap overflow-hidden font-Archivo font-semibold text-black/85 ">
+            <h1 className="text-4xl py-2 md:px-20 px-2 text-center text-wrap overflow-hidden font-Archivo font-semibold text-black/85 ">
               {title}
             </h1>
           )}

@@ -47,7 +47,7 @@ const TopItems = () => {
           </h6>
         </div>
         {/* Render the best selling products */}
-        <div className="h-fit py-[1%] px-[2%] grid grid-cols-5 gap-2">
+        <div className="h-fit py-[1%] md:px-[2%] px-5 grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
           <AnimatePresence>
             {topItemsList.length > 0 ? (
               topItemsList.map((product, index) => (

@@ -29,6 +29,7 @@ export default function AddProduct() {
   const [itemInStock, setItemInStock] = useState(false);
   const [productImg, setProductImg] = useState(null);
 
+  // * Adding a new product to MarketPlace
   const handleSubmit = async (e) => {
     if (!seller.sellerDetails.email) return "Insufficient details!!";
     if (!itemName || !description || !category || !price || !quantity) {
@@ -72,6 +73,7 @@ export default function AddProduct() {
       .catch((err) => console.error(err));
   };
 
+  // * Handling the product Image
   const handleFileChanges = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -81,7 +83,7 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="p-8 space-y-8 font-Archivo bg-stone-100 relative">
+    <div className="md:p-8 p-3 space-y-8 font-Archivo bg-stone-100 z-0">
       {/* Used to show a toast when new product is added  */}
       <AnimatePresence>
         {showToast && (
@@ -107,9 +109,6 @@ export default function AddProduct() {
       </AnimatePresence>
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-primary">Add New Product</h1>
-        <button className="border border-gray-300 rounded px-4 py-2 flex items-center">
-          <Plus className="mr-2 h-4 w-4" /> Quick Add
-        </button>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -182,7 +181,7 @@ export default function AddProduct() {
             </div>
           </div>
         </div>
-        <div className=" flex gap-3">
+        <div className=" flex md:flex-row flex-col gap-3">
           <div className="p-4 bg-white rounded-lg shadow grow">
             <div className="mb-4">
               <h2 className="text-lg font-bold">Pricing and Inventory</h2>
@@ -261,7 +260,7 @@ export default function AddProduct() {
             </div>
             <div className="grid gap-6">
               <div className="grid gap-2">
-                <div className="flex items-center gap-4">
+                <div className="flex md:flex-row flex-col items-center gap-4">
                   {itemImage ? (
                     <img
                       src={itemImage}

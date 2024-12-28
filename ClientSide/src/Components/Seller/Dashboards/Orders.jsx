@@ -67,7 +67,7 @@ const Orders = () => {
   }, []);
 
   return (
-    <div className="space-y-8 bg-stone-100 min-h-[90svh] px-3 py-2 font-Archivo mr-2">
+    <div className="space-y-8 bg-stone-100 min-h-[90svh] px-3 py-2 font-Archivo md:mr-2">
       <h1 className="text-3xl font-bold text-gray-800">Order Management</h1>
 
       {/* Rendering all the stats  */}
